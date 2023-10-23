@@ -20,4 +20,10 @@ interface TableModel {
   rows?: Row[],
 }
 
+type IndexedTableModel = {
+  index: number,
+  table: TableModel,
+}
+
+export type { IndexedTableModel };
 export default TableModel;

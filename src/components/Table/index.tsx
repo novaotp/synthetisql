@@ -10,15 +10,15 @@ import TableModel from '@models/tables';
 interface TableProps {
   /** The table properties. */
   table: TableModel;
-  /** The function to handle the selected table. */
-  handleSelectedTable: (table: TableModel) => void;
+  /** Sets a new selected table or undefined. */
+  setSelectedTable: (table: TableModel) => void;
 }
 
-const Table = ({ table, handleSelectedTable }: TableProps): JSX.Element => {
+const Table = ({ table, setSelectedTable }: TableProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
   const handleOnClick = () => {
-    handleSelectedTable(table);
+    setSelectedTable(table);
   }
 
   return (
