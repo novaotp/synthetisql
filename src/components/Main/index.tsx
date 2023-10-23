@@ -1,17 +1,23 @@
 
-import TableModel from '@models/tables';
-import styles from './index.module.scss';
-import Table from '../Table';
+// React
 import { useEffect, useRef } from 'react';
 
-interface MainProps {
-  /** The tables to display. */
-  tables: TableModel[];
-  /** Sets a new selected table or undefined. */
-  setSelectedTable: (table: TableModel | undefined) => void;
-}
+// Internal
 
-const Main = ({ tables, setSelectedTable }: MainProps): JSX.Element => {
+/// -- Styling -- ///
+import styles from './index.module.scss';
+
+/// -- Components -- ///
+import Table from '../Table';
+
+/// -- Hooks -- ///
+import useSelectedTable from '@hooks/useSelectedTable';
+import useTables from '@hooks/useTables';
+
+/** The area for moving the tables around. */
+const Main = (): JSX.Element => {
+  const { setSelectedTable } = useSelectedTable();
+  const { tables } = useTables();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,15 +38,7 @@ const Main = ({ tables, setSelectedTable }: MainProps): JSX.Element => {
 
   return (
     <div ref={ref} className={styles.main}>
-      {
-        tables.map((table, index) => (
-          <Table
-            key={index}
-            table={table}
-            setSelectedTable={setSelectedTable}
-          />
-        ))
-      }
+      { tables.map((table, index) => <Table key={index} indexedTable={table} />) }
     </div>
   )
 }

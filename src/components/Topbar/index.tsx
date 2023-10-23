@@ -1,25 +1,14 @@
 
-import TableModel from '@models/tables';
 import styles from './index.module.scss';
+import useTables from '@hooks/useTables';
 
-interface TopbarProps {
-  /** Adds a new table. */
-  addTable: (newTable: TableModel) => void;
-}
-
-/** A sidebar tool for tables. */
-const Topbar = ({ addTable }: TopbarProps): JSX.Element => {
-  const handleOnClick = () => {
-    const defaultTable: TableModel = {
-      name: "New Table"
-    };
-
-    addTable(defaultTable);
-  }
+/** A sidebar tool for editing tables. */
+const Topbar = (): JSX.Element => {
+  const { addTable } = useTables();
 
   return (
     <div className={styles.topbar}>
-      <button onClick={handleOnClick}>Add a new table !</button>
+      <button onClick={() => addTable()}>Add a new table !</button>
     </div>
   )
 }
