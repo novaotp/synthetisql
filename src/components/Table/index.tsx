@@ -1,20 +1,22 @@
 
 // React
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import Draggable, { ControlPosition, DraggableData, DraggableEvent } from "react-draggable";
 
 // Internal
 import styles from './index.module.scss';
 import { IndexedTableModel } from '@models/tables';
-import useSelectedTable from '@/libs/hooks/useSelectedTable';
 
 interface TableProps {
-  /** The indexed table properties. */
-  indexedTable: IndexedTableModel;
+  /** The table's properties. */
+  table: IndexedTableModel,
+  /** The index of the selected table. */
+  selectedTable: IndexedTableModel | undefined,
+  /** Sets the index of the selected table. */
+  setSelectedTable: Dispatch<SetStateAction<IndexedTableModel | undefined>>,
 }
 
-const Table = ({ indexedTable }: TableProps): JSX.Element => {
-  const { selectedTable, setSelectedTable } = useSelectedTable();
+const Table = ({ table, selectedTable, setSelectedTable }: TableProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOverlapping, setIsOverlapping] = useState<boolean>(false);
   const [position, setPosition] = useState<ControlPosition>({ x: 0, y: 0 });
@@ -65,23 +67,23 @@ const Table = ({ indexedTable }: TableProps): JSX.Element => {
         bottom: window.innerHeight - 40 - 100,
         left: 0
       }}
-      onMouseDown={() => setSelectedTable(indexedTable)}
+      onMouseDown={() => { setSelectedTable(table) }}
       onStart={handleDragStart}
       onDrag={() => setIsOverlapping(checkOverlapping())}
       onStop={handleStop}
     >
       <div
-        className={`${styles.table} ${selectedTable?.index === indexedTable.index ? styles.selected : ''} ${isOverlapping ? styles.overlapping : ''}`}
+        className={`${styles.table} ${selectedTable?.id === table.id ? styles.selected : ''} ${isOverlapping ? styles.overlapping : ''}`}
         ref={ref}
         data-table
       >
-        <div className={styles.header}>{indexedTable.table.name}</div>
+        <div className={styles.header}>{table.table.name}</div>
         {
-          indexedTable.table.rows.map(({ index, row }) => {
+          table.table.rows.map(({ id, row }) => {
             const { name, type, precision } = row;
 
             return (
-              <div key={index} className={styles.row}>{name} : {type}{precision ? `(${precision})` : ''}</div>
+              <div key={id} className={styles.row}>{name} : {type}{precision ? `(${precision})` : ''}</div>
             )
           })
         }

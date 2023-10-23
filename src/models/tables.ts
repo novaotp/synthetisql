@@ -41,10 +41,10 @@ class RowModelImpl {
   }
 }
 
-/** A row model with an ID. */
+/** A row model with a unique ID. */
 interface IndexedRowModel {
   /** The unique ID of the row. */
-  index: number,
+  id: string,
   /** The row itself. */
   row: RowModel,
 }
@@ -64,10 +64,10 @@ class TableModelImpl {
   }
 }
 
-/** A table model with an ID. */
+/** A table model with a unique ID. */
 interface IndexedTableModel {
   /** The unique ID of the table */
-  index: number,
+  id: string,
   /** The table itself. */
   table: TableModel,
 }

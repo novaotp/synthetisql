@@ -1,11 +1,8 @@
 
 import styles from './index.module.scss';
-import useTables from '@hooks/useTables';
 
 /** A sidebar tool for editing tables. */
-const Topbar = (): JSX.Element => {
-  const { addTable } = useTables();
-
+const Topbar = ({ addTable }: any): JSX.Element => {
   return (
     <div className={styles.topbar}>
       <button onClick={() => addTable()}>Add a new table !</button>

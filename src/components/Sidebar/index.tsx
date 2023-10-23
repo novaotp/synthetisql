@@ -11,37 +11,40 @@ import { useState } from 'react';
 /// -- Styling -- ///
 import styles from './index.module.scss';
 
-/// -- Hooks -- ///
-import useSelectedTable from '@hooks/useSelectedTable';
-import useTables from '@hooks/useTables';
-
 /// -- Models -- ///
-import { IndexedRowModel, RowModelImpl, RowModel, typeModels } from '@models/tables';
+import { IndexedRowModel, RowModelImpl, RowModel, typeModels, IndexedTableModel } from '@models/tables';
+
+/// -- Utils -- ///
+import uniqueId from '@utils/uniqueId';
+
+interface SidebarProps {
+  /** The index of the selected table. */
+  selectedTable: IndexedTableModel | undefined,
+  /** Updates a table in the list of tables. */
+  updateTable: (table: IndexedTableModel) => void
+}
 
 /** A sidebar tool for tables. */
-const Sidebar = (): JSX.Element => {
-  const { selectedTable, changeName } = useSelectedTable();
-  const { updateTable } = useTables();
-  const [openedRowIndex, setOpenedRowIndex] = useState<number>(-1);
+const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
+  const [openedRowId, setOpenedRowId] = useState<string>("");
+
+  /**
+   * Changes the name of the currently selected indexed table.
+   * @param name The new name of the selected indexed table.
+   */
+  const changeName = (name: string): void => {
+    if (!selectedTable) return;
+
+    selectedTable.table.name = name;
+    updateTable(selectedTable);
+  }
 
   /** Adds a new row with a unique ID. */
   const handleAddRow = (): void => {
     if (!selectedTable) return;
 
-    /** Generates a unique ID. */
-    const uniqueRowIndex = (): number => {
-      let highestRowIndex = -1;
-      selectedTable.table.rows.forEach(row => {
-        if (row.index > highestRowIndex) {
-          highestRowIndex = row.index;
-        }
-      });
-
-      return highestRowIndex + 1;
-    }
-
     const defaultRow: IndexedRowModel = {
-      index: uniqueRowIndex(),
+      id: uniqueId(),
       row: RowModelImpl.default()
     }
 
@@ -55,20 +58,26 @@ const Sidebar = (): JSX.Element => {
    * @param index The index of the row to update
    * @param key The key of the property to update in the row
    */
-  const handleRowChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, index: number, key: keyof RowModel): void => {
+  const handleRowChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, id: string, key: keyof RowModel): void => {
     if (!selectedTable) return;
 
     /** @ts-ignore ts(2322) */
     selectedTable
       .table
       .rows
-      .find(row => row.index === index)!
+      .find(row => row.id === id)!
       .row[key] = event.target.value;
 
     updateTable(selectedTable);
   }
 
-  if (!selectedTable) return <p>Select a table to get started.</p>; 
+  if (!selectedTable) {
+    return (
+      <div className={styles.sidebar}>
+        <p>Select a table to get started.</p>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.sidebar}>
@@ -87,38 +96,38 @@ const Sidebar = (): JSX.Element => {
         </button>
       </div>
       {
-        selectedTable.table.rows.map(({ index, row }) => {
+        selectedTable.table.rows.map(({ id, row }) => {
           const { name, type, precision } = row;
 
           return (
-            <div key={index} className={styles.row}>
+            <div key={id} className={styles.row}>
               <div className={styles.defaultVisible}>
                 <input
                   type="text"
                   value={name}
-                  onChange={(event) => handleRowChange(event, index, 'name')}
+                  onChange={(event) => handleRowChange(event, id, 'name')}
                 />
                 <button
                   type="button"
                   className={styles.more}
                   onClick={() => {
-                    if (index === openedRowIndex) {
-                      return setOpenedRowIndex(-1);
+                    if (id === openedRowId) {
+                      return setOpenedRowId("");
                     }
                     
-                    setOpenedRowIndex(index);
+                    setOpenedRowId(id);
                   }}
                 >
                   <KeyboardArrowDownRoundedIcon />
                 </button>
               </div>
-              <div className={`${styles.defaultUnvisible} ${openedRowIndex === index ? styles.active : ''}`}>
+              <div className={`${styles.defaultUnvisible} ${openedRowId === id ? styles.active : ''}`}>
                 <div>
                   <label htmlFor='type'>Type</label>
                   <select
                     defaultValue={type}
                     name="type"
-                    onChange={(event) => handleRowChange(event, index, 'type')}
+                    onChange={(event) => handleRowChange(event, id, 'type')}
                   >
                     {
                       typeModels.map((typeModel, index) => {
@@ -139,7 +148,7 @@ const Sidebar = (): JSX.Element => {
                   <input
                     defaultValue={precision}
                     name="precision"
-                    onChange={(event) => handleRowChange(event, index, 'precision')}
+                    onChange={(event) => handleRowChange(event, id, 'precision')}
                   />
                 </div>
               </div>
