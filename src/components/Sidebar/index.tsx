@@ -122,7 +122,7 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
                 </button>
               </div>
               <div className={`${styles.defaultUnvisible} ${openedRowId === id ? styles.active : ''}`}>
-                <div>
+                <div className={styles.prop}>
                   <label htmlFor='type'>Type</label>
                   <select
                     defaultValue={type}
@@ -143,7 +143,7 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
                     }
                   </select>
                 </div>
-                <div>
+                <div className={styles.prop}>
                   <label htmlFor='precision'>Précision</label>
                   <input
                     defaultValue={precision}

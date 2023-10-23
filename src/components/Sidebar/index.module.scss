@@ -69,9 +69,21 @@ $header-height: 50px;
       position: relative;
       display: none;
       flex-direction: column;
+      width: 100%;
 
       &.active {
         display: flex;
+      }
+
+      .prop {
+        position: relative;
+        max-width: 100%;
+        height: $header-height;
+        display: flex;
+
+        input {
+          width: 200px;
+        }
       }
     }
   }
