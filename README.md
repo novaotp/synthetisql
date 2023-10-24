@@ -1,8 +1,6 @@
 # SynthetiSQL
 
-Welcome to the SynthetiSQL project, your new companion in database modeling!  
-This is a free and open-source tool designed to generate SQL scripts for every relational database out there.  
-With SynthetiSQL, transitioning from logical models to actual databases has never been easier or more efficient.
+Welcome to the SynthetiSQL project, your new companion in database modeling! This is a free and open-source tool designed to generate SQL scripts for every relational database out there. With SynthetiSQL, transitioning from logical models to actual databases has never been easier or more efficient.
 
 ## Features
 
