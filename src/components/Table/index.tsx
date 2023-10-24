@@ -84,7 +84,7 @@ const Table = ({ table, selectedTable, setSelectedTable }: TableProps): JSX.Elem
         {
           table.table.rows.map(({ id, row }) => {
             return (
-              <div key={id} className={styles.row}>{row.name} : {row.type}{row.precision !== '%%IMPOSSIBLE%%' && row.precision !== null && row.precision !== "" ? `(${row.precision})` : ''}</div>
+              <div key={id} className={styles.row}>{row.name} : {row.type}{row.precision ? `(${row.precision})` : ''}</div>
             )
           })
         }

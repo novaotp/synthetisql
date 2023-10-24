@@ -14,7 +14,7 @@ class Row {
       precision: null,
       primaryKey: false,
       foreignKey: "",
-      autoIncrement: "%%IMPOSSIBLE%%",
+      autoIncrement: undefined,
       notNull: false,
       unique: false,
       check: "",

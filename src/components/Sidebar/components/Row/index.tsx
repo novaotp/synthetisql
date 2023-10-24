@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 // Internal
 import styles from './index.module.scss';
-import { RowModel, rowTypes } from '@models/row';
+import { RowModel, RowModelKey, RowType, rowTypes } from '@models/row';
 import RowImpl from '@models/row/impl';
 
 interface RowProps {
@@ -21,22 +21,22 @@ interface RowProps {
   setOpenedRowId: Dispatch<SetStateAction<string>>,
   /**
    * Updates the value of a given key of a given row (via its index).
-   * @param event The onChange event
-   * @param index The index of the row to update
+   * @param rowId The index of the row to update
    * @param key The key of the property to update in the row
+   * @param value The new value of the property
    */
-  handleRowChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, id: string, key: any) => void,
+  changeRow: (rowId: string, key: RowModelKey, value: any) => void,
 }
 
 /** Renders a row in the table. */
-const Row = ({ id, row, openedRowId, setOpenedRowId, handleRowChange }: RowProps) => {
+const Row = ({ id, row, openedRowId, setOpenedRowId, changeRow }: RowProps) => {
   return (
     <div className={styles.row}>
       <div className={styles.defaultVisible}>
         <input
           type="text"
           value={row.name}
-          onChange={(event) => handleRowChange(event, id, 'name')}
+          onChange={(event) => changeRow(id, 'name', event.target.value)}
         />
         <button
           type="button"
@@ -58,7 +58,15 @@ const Row = ({ id, row, openedRowId, setOpenedRowId, handleRowChange }: RowProps
           <select
             defaultValue={row.type}
             name="type"
-            onChange={(event) => handleRowChange(event, id, 'type')}
+            onChange={(event) => {
+              const newValue = event.target.value as RowType;
+
+              changeRow(id, 'type', event.target.value);
+
+              if (newValue === "INT" || newValue === "BOOL") {
+                changeRow(id, 'precision', null);
+              }
+            }}
           >
             {
               rowTypes.map((rowType, index) => {
@@ -74,18 +82,16 @@ const Row = ({ id, row, openedRowId, setOpenedRowId, handleRowChange }: RowProps
             }
           </select>
         </div>
-        { row.precision !== '%%IMPOSSIBLE%%' &&
-          (
-            <div className={styles.prop}>
-              <label htmlFor='precision'>Précision</label>
-              <input
-                defaultValue={row.precision ?? ""}
-                name="precision"
-                onChange={(event) => handleRowChange(event, id, 'precision')}
-              />
-            </div>
-          )
-        }
+        <div className={styles.prop}>
+          <label htmlFor='precision'>Précision</label>
+          <input
+            placeholder='Précision ici...'
+            value={row.precision ?? ""}
+            name="precision"
+            onChange={(event) => changeRow(id, 'precision', event.target.value)}
+            disabled={row.type === "INT" || row.type === "BOOL"}
+          />
+        </div>
       </div>
     </div>
   )

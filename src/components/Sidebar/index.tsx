@@ -12,7 +12,7 @@ import Row from './components/Row';
 
 /// -- Models -- ///
 import IndexedTableModel from '@models/table';
-import IndexedRowModel from '@models/row';
+import IndexedRowModel, { RowModelKey } from '@models/row';
 import RowImpl from '@models/row/impl';
 
 /// -- Utils -- ///
@@ -56,19 +56,19 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
 
   /**
    * Updates the value of a given key of a given row (via its index).
-   * @param event The onChange event
-   * @param index The index of the row to update
+   * @param rowId The index of the row to update
    * @param key The key of the property to update in the row
+   * @param value The new value of the property
    */
-  const handleRowChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, id: string, key: any): void => {
+  const changeRow = (rowId: string, key: RowModelKey, value: any): void => {
     if (!selectedTable) return;
 
     /** @ts-ignore ts(2322) */
     selectedTable
       .table
       .rows
-      .find(row => row.id === id)!
-      .row[key] = event.target.value;
+      .find(row => row.id === rowId)!
+      .row[key] = value;
 
     updateTable(selectedTable);
   }
@@ -96,7 +96,7 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
               row={row}
               openedRowId={openedRowId}
               setOpenedRowId={setOpenedRowId}
-              handleRowChange={handleRowChange}
+              changeRow={changeRow}
             />
           )
         })

@@ -1,11 +1,12 @@
 
-type Impossible = "%%IMPOSSIBLE%%";
-
 /** All the row type options. */
 const rowTypes = ["VARCHAR", "TEXT", "INT", "BOOL"] as const;
 
 /** The type of the row */
 type RowType = typeof rowTypes[number];
+
+/** A key in the row model. */
+type RowModelKey = keyof RowModelBlueprint;
 
 /**
  * Common properties shared by all row models.
@@ -15,31 +16,31 @@ type RowType = typeof rowTypes[number];
 interface RowModelBlueprint {
   name: string;
   type: RowType;
-  precision: number | null | Impossible,
+  precision: string | null | undefined,
   primaryKey: boolean;
-  foreignKey: string | Impossible,
-  autoIncrement: boolean | Impossible;
+  foreignKey: string | undefined,
+  autoIncrement: boolean | undefined;
   notNull: boolean;
   unique: boolean;
-  check?: string;
-  default?: string;
-  onUpdate?: string;
-  onDelete?: string;
-  comment?: string;
+  check: string | null;
+  default: string | null;
+  onUpdate: string | null;
+  onDelete: string | null;
+  comment: string | null;
 }
 
 /** Specific properties for a row with type `VARCHAR` or `TEXT`. */
 interface StringRowModel extends RowModelBlueprint {
   type: "VARCHAR" | "TEXT";
-  precision: number | null;
-  autoIncrement: Impossible,
+  precision: string | null;
+  autoIncrement: undefined,
   foreignKey: string;
 }
 
-/** Specific properties for a row with type `INT`. **/
+/** Specific properties for a row with type `INT`. */
 interface IntRowModel extends RowModelBlueprint {
   type: "INT";
-  precision: Impossible,
+  precision: undefined,
   autoIncrement: boolean;
   foreignKey: string;
 }
@@ -47,9 +48,9 @@ interface IntRowModel extends RowModelBlueprint {
 /** Specific properties for a row with type `BOOL`. */
 interface BoolRowModel extends RowModelBlueprint {
   type: "BOOL";
-  precision: Impossible;
-  autoIncrement: Impossible,
-  foreignKey: Impossible;
+  precision: undefined;
+  autoIncrement: undefined,
+  foreignKey: undefined;
 }
 
 // Union type for all row models
@@ -64,5 +65,5 @@ interface IndexedRowModel {
 }
 
 export { rowTypes };
-export type { RowModel, RowType };
+export type { RowModel, RowType, RowModelKey };
 export default IndexedRowModel;
