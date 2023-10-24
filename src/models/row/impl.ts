@@ -1,16 +1,21 @@
 
 import { RowModel } from "./index";
 
-class RowModelImpl {
+/**
+ * The row's implmentation. Contains useful methods.
+ * @class
+ */
+class Row {
   /** Returns a default `RowModel` object. */
   public static default(): RowModel {
     return {
       name: "New Row",
       type: "VARCHAR",
-      precision: 255,
+      precision: null,
       primaryKey: false,
-      notNull: false,
       foreignKey: "",
+      autoIncrement: "%%IMPOSSIBLE%%",
+      notNull: false,
       unique: false,
       check: "",
       default: "",
@@ -21,4 +26,4 @@ class RowModelImpl {
   }
 }
 
-export default RowModelImpl;
+export default Row;

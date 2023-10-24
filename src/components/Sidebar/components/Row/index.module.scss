@@ -1,0 +1,54 @@
+@import "../../variables.module.scss";
+
+.row {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px black;
+
+  .defaultVisible {
+    position: relative;
+    width: 100%;
+    height: $header-height;
+    display: flex;
+
+    input {
+      width: calc(100% - $header-height);
+      background-color: transparent;
+      border: none;
+      padding: 0 20px;
+    }
+
+    .more {
+      position: relative;
+      width: $header-height;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .defaultUnvisible {
+    position: relative;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+
+    &.active {
+      display: flex;
+    }
+
+    .prop {
+      position: relative;
+      max-width: 100%;
+      height: $header-height;
+      display: flex;
+
+      input {
+        width: 200px;
+      }
+    }
+  }
+}

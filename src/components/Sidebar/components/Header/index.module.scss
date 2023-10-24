@@ -1,0 +1,28 @@
+@import '../../variables.module.scss';
+
+.header {
+  position: relative;
+  width: 100%;
+  height: $header-height;
+  display: flex;
+
+  .name {
+    position: relative;
+    height: 100%;
+    width: calc(100% - $header-height);
+    background-color: rgb(127, 127, 255);
+    border: none;
+    padding: 0 20px;
+  }
+
+  .addRow {
+    position: relative;
+    height: 100%;
+    aspect-ratio: 1;
+    background-color: blue;
+
+    svg {
+      color: white;
+    }
+  }
+}

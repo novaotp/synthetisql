@@ -1,5 +1,3 @@
-$header-height: 50px;
-
 .sidebar {
   position: relative;
   width: 300px;
@@ -8,83 +6,8 @@ $header-height: 50px;
   flex-direction: column;
   background-color: lightgrey;
 
-  .header {
-    position: relative;
-    width: 100%;
-    height: $header-height;
-    display: flex;
-
-    .name {
-      position: relative;
-      height: 100%;
-      width: calc(100% - $header-height);
-      background-color: rgb(127, 127, 255);
-      border: none;
-      padding: 0 20px;
-    }
-
-    .addRow {
-      position: relative;
-      height: 100%;
-      aspect-ratio: 1;
-      background-color: blue;
-
-      svg {
-        color: white;
-      }
-    }
-  }
-
-  .row {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    border-bottom: solid 1px black;
-
-    .defaultVisible {
-      position: relative;
-      width: 100%;
-      height: $header-height;
-      display: flex;
-
-      input {
-        width: calc(100% - $header-height);
-        background-color: transparent;
-        border: none;
-        padding: 0 20px;
-      }
-
-      .more {
-        position: relative;
-        width: $header-height;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-
-    .defaultUnvisible {
-      position: relative;
-      display: none;
-      flex-direction: column;
-      width: 100%;
-
-      &.active {
-        display: flex;
-      }
-
-      .prop {
-        position: relative;
-        max-width: 100%;
-        height: $header-height;
-        display: flex;
-
-        input {
-          width: 200px;
-        }
-      }
-    }
+  &.centerP {
+    justify-content: center;
+    align-items: center;
   }
 }

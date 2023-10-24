@@ -5,7 +5,10 @@ import Draggable, { ControlPosition, DraggableData, DraggableEvent } from "react
 
 // Internal
 import styles from './index.module.scss';
-import { IndexedTableModel } from '@/models/table';
+
+/// -- Models -- ///
+import IndexedTableModel from '@models/table';
+import Row from '@models/row/impl';
 
 interface TableProps {
   /** The table's properties. */
@@ -80,10 +83,8 @@ const Table = ({ table, selectedTable, setSelectedTable }: TableProps): JSX.Elem
         <div className={styles.header}>{table.table.name}</div>
         {
           table.table.rows.map(({ id, row }) => {
-            const { name, type, precision } = row;
-
             return (
-              <div key={id} className={styles.row}>{name} : {type}{precision ? `(${precision})` : ''}</div>
+              <div key={id} className={styles.row}>{row.name} : {row.type}{row.precision !== '%%IMPOSSIBLE%%' && row.precision !== null && row.precision !== "" ? `(${row.precision})` : ''}</div>
             )
           })
         }

@@ -1,8 +1,4 @@
 
-// MUI Icons
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-
 // React
 import { useState } from 'react';
 
@@ -11,13 +7,17 @@ import { useState } from 'react';
 /// -- Styling -- ///
 import styles from './index.module.scss';
 
+/// -- Components -- ///
+import Row from './components/Row';
+
 /// -- Models -- ///
 import IndexedTableModel from '@models/table';
-import IndexedRowModel, { RowModel, StringRowModel, rowTypeOptions } from '@models/row';
-import RowModelImpl from '@models/row/impl';
+import IndexedRowModel from '@models/row';
+import RowImpl from '@models/row/impl';
 
 /// -- Utils -- ///
 import uniqueId from '@utils/uniqueId';
+import Header from './components/Header';
 
 interface SidebarProps {
   /** The index of the selected table. */
@@ -47,7 +47,7 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
 
     const defaultRow: IndexedRowModel = {
       id: uniqueId(),
-      row: RowModelImpl.default()
+      row: RowImpl.default()
     }
 
     selectedTable.table.rows.push(defaultRow);
@@ -60,7 +60,7 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
    * @param index The index of the row to update
    * @param key The key of the property to update in the row
    */
-  const handleRowChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, id: string, key: keyof RowModel): void => {
+  const handleRowChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, id: string, key: any): void => {
     if (!selectedTable) return;
 
     /** @ts-ignore ts(2322) */
@@ -75,7 +75,7 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
 
   if (!selectedTable) {
     return (
-      <div className={styles.sidebar}>
+      <div className={`${styles.sidebar} ${styles.centerP}`}>
         <p>Select a table to get started.</p>
       </div>
     )
@@ -83,76 +83,21 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.header}>
-        <input
-          className={styles.name}
-          type="text"
-          value={selectedTable.table.name}
-          onChange={(event) => changeName(event.target.value)}
-        />
-        <button
-          onClick={handleAddRow}
-          className={styles.addRow}
-        >
-          <AddRoundedIcon />
-        </button>
-      </div>
+      <Header
+        selectedTable={selectedTable}
+        changeName={changeName}
+        handleAddRow={handleAddRow}
+      />
       {
         selectedTable.table.rows.map(({ id, row }) => {
           return (
-            <div key={id} className={styles.row}>
-              <div className={styles.defaultVisible}>
-                <input
-                  type="text"
-                  value={row.name}
-                  onChange={(event) => handleRowChange(event, id, 'name')}
-                />
-                <button
-                  type="button"
-                  className={styles.more}
-                  onClick={() => {
-                    if (id === openedRowId) {
-                      return setOpenedRowId("");
-                    }
-                    
-                    setOpenedRowId(id);
-                  }}
-                >
-                  <KeyboardArrowDownRoundedIcon />
-                </button>
-              </div>
-              <div className={`${styles.defaultUnvisible} ${openedRowId === id ? styles.active : ''}`}>
-                <div className={styles.prop}>
-                  <label htmlFor='type'>Type</label>
-                  <select
-                    defaultValue={row.type}
-                    name="type"
-                    onChange={(event) => handleRowChange(event, id, 'type')}
-                  >
-                    {
-                      rowTypeOptions.map((rowType, index) => {
-                        return (
-                          <option
-                            key={index}
-                            value={rowType}
-                          >
-                            {rowType}
-                          </option>
-                        )
-                      })
-                    }
-                  </select>
-                </div>
-                { (typeof row === "StringRowModel") && <div className={styles.prop}>
-                  <label htmlFor='precision'>Précision</label>
-                  <input
-                    defaultValue={precision}
-                    name="precision"
-                    onChange={(event) => handleRowChange(event, id, 'precision')}
-                  />
-                </div>}
-              </div>
-            </div>
+            <Row
+              id={id}
+              row={row}
+              openedRowId={openedRowId}
+              setOpenedRowId={setOpenedRowId}
+              handleRowChange={handleRowChange}
+            />
           )
         })
       }
