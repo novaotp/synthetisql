@@ -9,7 +9,9 @@ import styles from './index.module.scss';
 
 /// -- Components -- ///
 import Table from '../Table';
-import { IndexedTableModel } from '@/models/tables';
+
+/// -- Models -- ///
+import IndexedTableModel from '@/models/table';
 
 interface MainProps {
   /** The list of tables to display. */

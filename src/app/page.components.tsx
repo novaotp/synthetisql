@@ -15,7 +15,8 @@ import Sidebar from "@components/Sidebar";
 import Topbar from "@components/Topbar";
 
 /// -- Models -- ///
-import TableModel, { IndexedTableModel, TableModelImpl } from '@/models/tables';
+import IndexedTableModel, { TableModel } from '@models/table';
+import TableModelImpl from '@models/table/impl';
 
 /// -- Utils -- ///
 import uniqueId from '@utils/uniqueId';

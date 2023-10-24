@@ -12,7 +12,9 @@ import { useState } from 'react';
 import styles from './index.module.scss';
 
 /// -- Models -- ///
-import { IndexedRowModel, RowModelImpl, RowModel, typeModels, IndexedTableModel } from '@models/tables';
+import IndexedTableModel from '@models/table';
+import IndexedRowModel, { RowModel, StringRowModel, rowTypeOptions } from '@models/row';
+import RowModelImpl from '@models/row/impl';
 
 /// -- Utils -- ///
 import uniqueId from '@utils/uniqueId';
@@ -97,14 +99,12 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
       </div>
       {
         selectedTable.table.rows.map(({ id, row }) => {
-          const { name, type, precision } = row;
-
           return (
             <div key={id} className={styles.row}>
               <div className={styles.defaultVisible}>
                 <input
                   type="text"
-                  value={name}
+                  value={row.name}
                   onChange={(event) => handleRowChange(event, id, 'name')}
                 />
                 <button
@@ -125,32 +125,32 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
                 <div className={styles.prop}>
                   <label htmlFor='type'>Type</label>
                   <select
-                    defaultValue={type}
+                    defaultValue={row.type}
                     name="type"
                     onChange={(event) => handleRowChange(event, id, 'type')}
                   >
                     {
-                      typeModels.map((typeModel, index) => {
+                      rowTypeOptions.map((rowType, index) => {
                         return (
                           <option
                             key={index}
-                            value={typeModel}
+                            value={rowType}
                           >
-                            {typeModel}
+                            {rowType}
                           </option>
                         )
                       })
                     }
                   </select>
                 </div>
-                <div className={styles.prop}>
+                { (typeof row === "StringRowModel") && <div className={styles.prop}>
                   <label htmlFor='precision'>Précision</label>
                   <input
                     defaultValue={precision}
                     name="precision"
                     onChange={(event) => handleRowChange(event, id, 'precision')}
                   />
-                </div>
+                </div>}
               </div>
             </div>
           )

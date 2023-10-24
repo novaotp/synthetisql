@@ -5,7 +5,7 @@ import Draggable, { ControlPosition, DraggableData, DraggableEvent } from "react
 
 // Internal
 import styles from './index.module.scss';
-import { IndexedTableModel } from '@models/tables';
+import { IndexedTableModel } from '@/models/table';
 
 interface TableProps {
   /** The table's properties. */
