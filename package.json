@@ -2,6 +2,12 @@
   "name": "synthetisql",
   "version": "0.1.0",
   "private": true,
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Sajidur Rahman",
+    "email": "rahmansajidur30@gmail.com"
+  },
+  "description": "A free and open source MLD builder capable of generating SQL scripts for every relational database.",
   "scripts": {
     "dev": "next dev -p 5173",
     "build": "next build",
