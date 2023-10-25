@@ -10,11 +10,11 @@
   .defaultVisible {
     position: relative;
     width: 100%;
-    height: $header-height;
+    height: $prop-height;
     display: flex;
 
     input {
-      width: calc(100% - $header-height);
+      width: calc( 100% - $prop-height );
       background-color: transparent;
       border: none;
       padding: 0 20px;
@@ -22,8 +22,8 @@
 
     .more {
       position: relative;
-      width: $header-height;
-      height: 100%;
+      width: $prop-height;
+      aspect-ratio: 1;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -43,7 +43,7 @@
     .prop {
       position: relative;
       max-width: 100%;
-      height: $header-height;
+      height: $prop-height;
       display: flex;
 
       input {

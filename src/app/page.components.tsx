@@ -18,6 +18,9 @@ import Topbar from "@components/Topbar";
 import IndexedTableModel, { TableModel } from '@models/table';
 import TableModelImpl from '@models/table/impl';
 
+/// -- Libs -- ///
+import TablesContext from '@/libs/contexts/TablesContext';
+
 /// -- Utils -- ///
 import uniqueId from '@utils/uniqueId';
 
@@ -46,11 +49,13 @@ const Landing = (): JSX.Element => {
   
   return (
     <div className={styles.landing}>
-      <Sidebar selectedTable={selectedTable} updateTable={updateTable} />
-      <div className={styles.vertical}>
-        <Topbar addTable={addTable} />
-        <Main selectedTable={selectedTable} setSelectedTable={setSelectedTable} tables={tables} />
-      </div>
+      <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable }}>
+        <Sidebar />
+        <div className={styles.vertical}>
+          <Topbar />
+          <Main />
+        </div>
+      </TablesContext.Provider>
     </div>
   )
 }

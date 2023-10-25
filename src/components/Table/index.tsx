@@ -1,26 +1,25 @@
 
 // React
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
-import Draggable, { ControlPosition, DraggableData, DraggableEvent } from "react-draggable";
+import { useContext, useRef, useState } from 'react';
+import Draggable, { type ControlPosition, type DraggableData, type DraggableEvent } from "react-draggable";
 
 // Internal
 import styles from './index.module.scss';
 
 /// -- Models -- ///
 import IndexedTableModel from '@models/table';
-import Row from '@models/row/impl';
+
+/// -- Libs -- ///
+import TablesContext from '@/libs/contexts/TablesContext';
 
 interface TableProps {
   /** The table's properties. */
   table: IndexedTableModel,
-  /** The index of the selected table. */
-  selectedTable: IndexedTableModel | undefined,
-  /** Sets the index of the selected table. */
-  setSelectedTable: Dispatch<SetStateAction<IndexedTableModel | undefined>>,
 }
 
-const Table = ({ table, selectedTable, setSelectedTable }: TableProps): JSX.Element => {
+const Table = ({ table }: TableProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
+  const { selectedTable, setSelectedTable } = useContext(TablesContext);
   const [isOverlapping, setIsOverlapping] = useState<boolean>(false);
   const [position, setPosition] = useState<ControlPosition>({ x: 0, y: 0 });
   const [dragStartPosition, setDragStartPosition] = useState<ControlPosition>({ x: 0, y: 0 });

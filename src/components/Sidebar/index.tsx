@@ -1,6 +1,8 @@
 
+"use client";
+
 // React
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 // Internal
 
@@ -8,6 +10,7 @@ import { useState } from 'react';
 import styles from './index.module.scss';
 
 /// -- Components -- ///
+import Header from './components/Header';
 import Row from './components/Row';
 
 /// -- Models -- ///
@@ -17,18 +20,14 @@ import RowImpl from '@models/row/impl';
 
 /// -- Utils -- ///
 import uniqueId from '@utils/uniqueId';
-import Header from './components/Header';
 
-interface SidebarProps {
-  /** The index of the selected table. */
-  selectedTable: IndexedTableModel | undefined,
-  /** Updates a table in the list of tables. */
-  updateTable: (table: IndexedTableModel) => void
-}
+/// -- Libs -- ///
+import TablesContext from '@contexts/TablesContext';
 
 /** A sidebar tool for tables. */
-const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
+const Sidebar = (): JSX.Element => {
   const [openedRowId, setOpenedRowId] = useState<string>("");
+  const { selectedTable, updateTable } = useContext(TablesContext);
 
   /**
    * Changes the name of the currently selected indexed table.
@@ -89,11 +88,11 @@ const Sidebar = ({ selectedTable, updateTable }: SidebarProps): JSX.Element => {
         handleAddRow={handleAddRow}
       />
       {
-        selectedTable.table.rows.map(({ id, row }) => {
+        selectedTable.table.rows.map((indexedRow: IndexedRowModel) => {
           return (
             <Row
-              id={id}
-              row={row}
+              key={indexedRow.id}
+              indexedRow={indexedRow}
               openedRowId={openedRowId}
               setOpenedRowId={setOpenedRowId}
               changeRow={changeRow}

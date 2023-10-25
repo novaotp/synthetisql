@@ -7,14 +7,11 @@ import { Dispatch, SetStateAction } from 'react';
 
 // Internal
 import styles from './index.module.scss';
-import { RowModel, RowModelKey, RowType, rowTypes } from '@models/row';
-import RowImpl from '@models/row/impl';
+import IndexedRowModel, { RowModel, RowModelKey, rowTypes } from '@models/row';
 
 interface RowProps {
-  /** The unique ID of the row. */
-  id: string,
-  /** The row's properties to render. */
-  row: RowModel,
+  /** The indexed row to render. */
+  indexedRow: IndexedRowModel;
   /** The currently opened row. */
   openedRowId: string,
   /** Updates the currently opened row. */
@@ -29,7 +26,16 @@ interface RowProps {
 }
 
 /** Renders a row in the table. */
-const Row = ({ id, row, openedRowId, setOpenedRowId, changeRow }: RowProps) => {
+const Row = ({ indexedRow: { id, row }, openedRowId, setOpenedRowId, changeRow }: RowProps): JSX.Element => {
+  /** Checks if the row supports precision or not. */
+  const supportsPrecision = (): boolean => !(row.type === "INT" || row.type === "BOOL");
+
+  /**
+   * Changes the precision of the row.
+   * @param value The new value ofthe precision
+   */
+  const changePrecision = (value: string | null | undefined): void => changeRow(id, 'precision', value);
+
   return (
     <div className={styles.row}>
       <div className={styles.defaultVisible}>
@@ -59,12 +65,10 @@ const Row = ({ id, row, openedRowId, setOpenedRowId, changeRow }: RowProps) => {
             defaultValue={row.type}
             name="type"
             onChange={(event) => {
-              const newValue = event.target.value as RowType;
-
               changeRow(id, 'type', event.target.value);
 
-              if (newValue === "INT" || newValue === "BOOL") {
-                changeRow(id, 'precision', null);
+              if (!supportsPrecision()) {
+                changePrecision(undefined);
               }
             }}
           >
@@ -83,13 +87,13 @@ const Row = ({ id, row, openedRowId, setOpenedRowId, changeRow }: RowProps) => {
           </select>
         </div>
         <div className={styles.prop}>
-          <label htmlFor='precision'>Précision</label>
+          <label htmlFor='precision'>Precision</label>
           <input
-            placeholder='Précision ici...'
+            placeholder='Set the precision here...'
             value={row.precision ?? ""}
             name="precision"
-            onChange={(event) => changeRow(id, 'precision', event.target.value)}
-            disabled={row.type === "INT" || row.type === "BOOL"}
+            onChange={(event) => changePrecision(event.target.value)}
+            disabled={!supportsPrecision()}
           />
         </div>
       </div>
