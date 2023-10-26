@@ -5,7 +5,7 @@ Welcome to the SynthetiSQL project, your new companion in database modeling! Thi
 ## Features
 
 * Free & Open Source: Join a community of developers in making database modeling more accessible, proficient and easier to use.
-* Universal SQL Script Generation: Regardless of your relational database type, SynthetiSQL got you covered.
+* Universal SQL Script Generation: Regardless of your relational database, SynthetiSQL got you covered.
 * Seamless Transition: Effortlessly move from logical models to database creation with generated scripts that are ready to run.
 
 ## Getting Started
@@ -35,6 +35,6 @@ Your contributions are what makes this project remarkable! Feel free to open iss
 
 ⭐ Don’t forget to star the project if you find it useful. Your star makes a big difference!
 
-## License 📄
+## License
 
 This project is licensed under the Apache 2.0 License - see the [LICENSE file](./LICENSE.txt) for details.
