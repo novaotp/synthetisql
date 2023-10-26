@@ -19,17 +19,24 @@ interface TableProps {
 
 const Table = ({ table }: TableProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
-  const { selectedTable, setSelectedTable } = useContext(TablesContext);
+  const { selectedTable, setSelectedTable, updateTable } = useContext(TablesContext);
   const [isOverlapping, setIsOverlapping] = useState<boolean>(false);
-  const [position, setPosition] = useState<ControlPosition>({ x: 0, y: 0 });
-  const [dragStartPosition, setDragStartPosition] = useState<ControlPosition>({ x: 0, y: 0 });
+  const [position, setPosition] = useState<ControlPosition>(table.position);
+  const [dragStartPosition, setDragStartPosition] = useState<ControlPosition>(table.position);
 
   const handleDragStart = (event: DraggableEvent, data: DraggableData) => {
     setDragStartPosition({ x: data.x, y: data.y });
   }
 
   const handleStop = (event: DraggableEvent, data: DraggableData): void => {
-    checkOverlapping() ? setPosition(dragStartPosition) : setPosition({ x: data.x, y: data.y });
+    if (checkOverlapping()) {
+      setPosition(dragStartPosition);
+    } else {
+      setPosition({ x: data.x, y: data.y });
+
+      table!.position = { x: data.x, y: data.y };
+      updateTable(table);
+    }
     setIsOverlapping(false);
   }
 
@@ -63,12 +70,6 @@ const Table = ({ table }: TableProps): JSX.Element => {
     <Draggable
       nodeRef={ref}
       position={position}
-      bounds={{
-        top: 0,
-        right: window.innerWidth - 300 - 200,
-        bottom: window.innerHeight - 40 - 100,
-        left: 0
-      }}
       onMouseDown={() => { setSelectedTable(table) }}
       onStart={handleDragStart}
       onDrag={() => setIsOverlapping(checkOverlapping())}

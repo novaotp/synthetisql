@@ -1,4 +1,8 @@
 
+// React
+import { ControlPosition } from "react-draggable";
+
+// Internal
 import IndexedRowModel from "../row";
 
 interface TableModel {
@@ -12,6 +16,8 @@ interface IndexedTableModel {
   id: string,
   /** The table itself. */
   table: TableModel,
+  /** The position of the table. */
+  position: ControlPosition,
 }
 
 export type { TableModel };

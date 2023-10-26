@@ -3,6 +3,7 @@
 
 // React
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 // Internal
 
@@ -20,9 +21,6 @@ import TableModelImpl from '@models/table/impl';
 /// -- Libs -- ///
 import TablesContext from '@/libs/contexts/TablesContext';
 
-/// -- Utils -- ///
-import uniqueId from '@utils/uniqueId';
-
 /** The main component of the landing page. */
 const Landing = (): JSX.Element => {
   const [selectedTable, setSelectedTable] = useState<IndexedTableModel | undefined>(undefined);
@@ -33,9 +31,7 @@ const Landing = (): JSX.Element => {
    * @param table The table to add
    */
   const addTable = (table: TableModel = TableModelImpl.default()) => {
-    let id: string = uniqueId();
-
-    setTables((prevTables: IndexedTableModel[]) => [...prevTables, { id: id, table }])
+    setTables((prevTables: IndexedTableModel[]) => [...prevTables, { id: uuidv4(), table, position: { x: 0, y: 0 } }])
   }
 
   /**
