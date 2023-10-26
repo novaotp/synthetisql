@@ -8,11 +8,30 @@ import TablesContext from '@contexts/TablesContext';
 
 /** A sidebar tool for editing tables. */
 const Topbar = (): JSX.Element => {
-  const { addTable } = useContext(TablesContext);
+  const { tables } = useContext(TablesContext);
+
+  const handleExport = async (): Promise<void> => {
+    let data = "";
+
+    tables.forEach((table) => {
+      data += JSON.stringify(table) + "\n";
+    });
+
+    fetch('/api/export', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        data: data,
+        filename: 'db'
+      }),
+    })
+  }
 
   return (
     <div className={styles.topbar}>
-      <button onClick={() => addTable()}>Add a new table !</button>
+      <button onClick={handleExport} disabled={tables.length === 0}>Export</button>
     </div>
   )
 }
