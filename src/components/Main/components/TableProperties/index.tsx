@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 import TabLabel from './types';
 
 /// -- Components -- ///
-import Body, { Button, Tab } from './components';
+import Body, { Action, Tab } from './components';
 
 /// -- Libs -- ///
 import TablesContext from '@contexts/TablesContext';
@@ -44,9 +44,9 @@ const TableProperties = ({ dialogRef, close }: TablePropertiesProps): JSX.Elemen
               </ul>
               <Body activeTab={activeTab} />
               <ul className={styles.footer}>
-                <Button label="Delete" onClick={handleDelete} type='danger' />
-                <Button label="Cancel" onClick={handleCancel} type='cancel' />
-                <Button label="Save" onClick={handleSave} type='success' />
+                <Action label="Delete" onClick={handleDelete} type='danger' />
+                <Action label="Cancel" onClick={handleCancel} type='cancel' />
+                <Action label="Save" onClick={handleSave} type='success' />
               </ul>
             </>
           )

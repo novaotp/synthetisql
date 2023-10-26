@@ -1,7 +1,7 @@
 
 import Body from "./Body";
-import Button from "./Button";
+import Action from "./Action";
 import Tab from "./Tab";
 
-export { Button, Tab };
+export { Action, Tab };
 export default Body;
