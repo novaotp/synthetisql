@@ -20,10 +20,15 @@ interface TablesContextProps {
    */
   addTable: (table?: TableModel) => void,
   /**
-   * Updates a table in the list of tables.
+   * Updates a table in the list of tables if the table is defined.
    * @param table The indexed table to update
    */
-  updateTable: (table: IndexedTableModel) => void,
+  updateTable: (table: IndexedTableModel | undefined) => void,
+  /**
+   * Deletes a table from the list of tables if the table is defined.
+   * @param table The indexed table to update
+   */
+  deleteTable: (table: IndexedTableModel | undefined) => void,
 }
 
 const TablesContext = createContext<TablesContextProps>({} as TablesContextProps);

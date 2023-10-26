@@ -11,7 +11,6 @@ import styles from './page.module.scss';
 
 /// -- Components -- ///
 import Main from '@components/Main';
-import Sidebar from "@components/Sidebar";
 import Topbar from "@components/Topbar";
 
 /// -- Models -- ///
@@ -35,28 +34,37 @@ const Landing = (): JSX.Element => {
    */
   const addTable = (table: TableModel = TableModelImpl.default()) => {
     let id: string = uniqueId();
-    
+
     setTables((prevTables: IndexedTableModel[]) => [...prevTables, { id: id, table }])
   }
 
   /**
-   * Updates a table in the list of tables.
+   * Updates a table in the list of tables if the table is defined.
    * @param table The indexed table to update
    */
-  const updateTable = (table: IndexedTableModel) => {
+  const updateTable = (table: IndexedTableModel | undefined) => {
+    if (!table) return;
+
     setTables((prevTables: IndexedTableModel[]) => prevTables.map(prevTable => prevTable.id === table.id ? table : prevTable))
   }
-  
+
+  /**
+   * Deletes a table from the list of tables if the table is defined.
+   * @param table The indexed table to update
+   */
+  const deleteTable = (table: IndexedTableModel | undefined) => {
+    if (!table) return;
+
+    setTables((prevTables: IndexedTableModel[]) => prevTables.filter(prevTable => prevTable.id !== table.id))
+  }
+
   return (
-    <div className={styles.landing}>
-      <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable }}>
-        <Sidebar />
-        <div className={styles.vertical}>
-          <Topbar />
-          <Main />
-        </div>
-      </TablesContext.Provider>
-    </div>
+    <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable, deleteTable }}>
+      <div className={styles.landing}>
+        <Topbar />
+        <Main />
+      </div>
+    </TablesContext.Provider>
   )
 }
 

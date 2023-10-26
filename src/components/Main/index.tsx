@@ -2,7 +2,7 @@
 "use client";
 
 // React
-import { useEffect, useRef, useContext } from 'react';
+import { useEffect, useRef, useContext, useState } from 'react';
 
 // Internal
 
@@ -12,27 +12,43 @@ import styleVars from '../../styles/variables.module.scss';
 
 /// -- Components -- ///
 import Table from '../Table';
+import ContextMenu from './components/ContextMenu';
+import TableProperties from './components/TableProperties';
 
 /// -- Models -- ///
-import IndexedTableModel from '@/models/table';
-import ContextMenu from './components/ContextMenu';
+import IndexedTableModel from '@models/table';
 
 /// -- Libs -- ///
-import TablesContext from '@/libs/contexts/TablesContext';
+import TablesContext from '@contexts/TablesContext';
 
 /** The area for moving the tables around. */
 const Main = (): JSX.Element => {
   const { selectedTable, setSelectedTable, tables } = useContext(TablesContext);
+  const [isContextMenuOnTable, setIsContextMenuOnTable] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLMenuElement>(null);
+  const contextMenuRef = useRef<HTMLMenuElement>(null);
+  const tablePropertiesRef = useRef<HTMLDialogElement>(null);
+
+  const openTableProperties = (): void => {
+    tablePropertiesRef.current!.showModal();
+  }
+
+  const closeTableProperties = () => {
+    tablePropertiesRef.current!.close();
+  }
 
   useEffect(() => {
     const handleLeftClick = (event: MouseEvent) => {
       const element = event.target as HTMLElement;
 
-      menuRef.current!.style.display = "none";
+      contextMenuRef.current!.style.display = "none";
 
-      if (ref.current!.contains(element) && !(element).hasAttribute("data-table")) {
+      if (
+        ref.current!.contains(element)
+        && !element.hasAttribute("data-table")
+        && !contextMenuRef.current!.contains(element)
+        && !tablePropertiesRef.current!.open
+      ) {
         setSelectedTable(undefined);
       }
     };
@@ -41,11 +57,13 @@ const Main = (): JSX.Element => {
       event.preventDefault();
       const element = event.target as HTMLElement;
 
-      if (ref.current!.contains(element) && !(element).hasAttribute("data-table")) {
-        menuRef.current!.style.display = "flex";
-        menuRef.current!.style.top = `${event.clientY - Number(styleVars.topbarHeightNum)}px`;
-        menuRef.current!.style.left = `${event.clientX - Number(styleVars.sidebarWidthNum)}px`;
-      }
+      if (!ref.current!.contains(element)) return;
+      
+      setIsContextMenuOnTable(element.hasAttribute("data-table"));
+
+      contextMenuRef.current!.style.display = "flex";
+      contextMenuRef.current!.style.top = `${event.clientY - Number(styleVars.topbarHeightNum)}px`;
+      contextMenuRef.current!.style.left = `${event.clientX}px`;
     }
 
     document.addEventListener('click', handleLeftClick);
@@ -59,8 +77,11 @@ const Main = (): JSX.Element => {
 
   return (
     <div ref={ref} className={styles.main}>
-      { tables.map((table: IndexedTableModel, index: number) => <Table key={index} table={table} /> ) }
-      <ContextMenu menuRef={menuRef} />
+      <div>
+        { tables.map((table: IndexedTableModel, index: number) => <Table key={index} table={table} /> ) }
+      </div>
+      <ContextMenu menuRef={contextMenuRef} isOnTable={isContextMenuOnTable} openTableProperties={openTableProperties} />
+      <TableProperties dialogRef={tablePropertiesRef} close={closeTableProperties} />
     </div>
   )
 }
