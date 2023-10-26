@@ -1,60 +1,87 @@
 
+"use client";
+
 // React
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext, useState } from 'react';
 
 // Internal
 
 /// -- Styling -- ///
 import styles from './index.module.scss';
+import styleVars from '../../styles/variables.module.scss';
 
 /// -- Components -- ///
 import Table from '../Table';
+import ContextMenu from './components/ContextMenu';
+import TableProperties from './components/TableProperties';
 
 /// -- Models -- ///
-import IndexedTableModel from '@/models/table';
+import IndexedTableModel from '@models/table';
 
-interface MainProps {
-  /** The list of tables to display. */
-  tables: IndexedTableModel[],
-  /** The selected table. */
-  selectedTable: IndexedTableModel | undefined,
-  /** Sets the index of the selected table. */
-  setSelectedTable: Dispatch<SetStateAction<IndexedTableModel | undefined>>,
-}
+/// -- Libs -- ///
+import TablesContext from '@contexts/TablesContext';
 
 /** The area for moving the tables around. */
-const Main = ({ tables, selectedTable, setSelectedTable }: MainProps): JSX.Element => {
+const Main = (): JSX.Element => {
+  const { selectedTable, setSelectedTable, tables } = useContext(TablesContext);
+  const [isContextMenuOnTable, setIsContextMenuOnTable] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const contextMenuRef = useRef<HTMLMenuElement>(null);
+  const tablePropertiesRef = useRef<HTMLDialogElement>(null);
+
+  const openTableProperties = (): void => {
+    tablePropertiesRef.current!.showModal();
+  }
+
+  const closeTableProperties = () => {
+    tablePropertiesRef.current!.close();
+  }
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleLeftClick = (event: MouseEvent) => {
       const element = event.target as HTMLElement;
 
-      if (ref.current!.contains(element) && !(element).hasAttribute("data-table")) {
+      contextMenuRef.current!.style.display = "none";
+
+      if (
+        ref.current!.contains(element)
+        && !element.hasAttribute("data-table")
+        && !contextMenuRef.current!.contains(element)
+        && !tablePropertiesRef.current!.open
+      ) {
         setSelectedTable(undefined);
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
+    const handleContextMenu = (event: MouseEvent) => {
+      event.preventDefault();
+      const element = event.target as HTMLElement;
+
+      if (!ref.current!.contains(element)) return;
+      
+      setIsContextMenuOnTable(element.hasAttribute("data-table"));
+
+      contextMenuRef.current!.style.display = "flex";
+      contextMenuRef.current!.style.top = `${event.clientY - Number(styleVars.topbarHeightNum)}px`;
+      contextMenuRef.current!.style.left = `${event.clientX}px`;
+    }
+
+    document.addEventListener('click', handleLeftClick);
+    document.addEventListener('contextmenu', handleContextMenu);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('click', handleLeftClick);
+      document.removeEventListener('contextmenu', handleContextMenu);
     };
   }, []);
 
   return (
     <div ref={ref} className={styles.main}>
-      {
-        tables.map((table: IndexedTableModel, index: number) => {
-          return (
-            <Table
-              key={index}
-              table={table}
-              selectedTable={selectedTable}
-              setSelectedTable={setSelectedTable}
-            />
-          )
-        })}
+      <div>
+        { tables.map((table: IndexedTableModel, index: number) => <Table key={index} table={table} /> ) }
+      </div>
+      <ContextMenu menuRef={contextMenuRef} isOnTable={isContextMenuOnTable} openTableProperties={openTableProperties} />
+      <TableProperties dialogRef={tablePropertiesRef} close={closeTableProperties} />
     </div>
   )
 }
