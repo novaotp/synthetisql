@@ -1,0 +1,35 @@
+.action {
+  position: relative;
+  width: 150px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin: 0 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &[data-button-type="success"] {
+    background-color: green;
+  }
+
+  &[data-button-type="danger"] {
+    background-color: red;
+  }
+
+  &[data-button-type="cancel"] {
+    background-color: rgb(160, 160, 160);
+  }
+
+  .button {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    font-size: 18px;
+    color: white;
+  }
+}

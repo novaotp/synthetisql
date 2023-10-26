@@ -11,7 +11,6 @@ import styles from './page.module.scss';
 
 /// -- Components -- ///
 import Main from '@components/Main';
-import Sidebar from "@components/Sidebar";
 import Topbar from "@components/Topbar";
 
 /// -- Models -- ///
@@ -40,15 +39,27 @@ const Landing = (): JSX.Element => {
   }
 
   /**
-   * Updates a table in the list of tables.
+   * Updates a table in the list of tables if the table is defined.
    * @param table The indexed table to update
    */
-  const updateTable = (table: IndexedTableModel) => {
+  const updateTable = (table: IndexedTableModel | undefined) => {
+    if (!table) return;
+
     setTables((prevTables: IndexedTableModel[]) => prevTables.map(prevTable => prevTable.id === table.id ? table : prevTable))
   }
 
+  /**
+   * Deletes a table from the list of tables if the table is defined.
+   * @param table The indexed table to update
+   */
+  const deleteTable = (table: IndexedTableModel | undefined) => {
+    if (!table) return;
+
+    setTables((prevTables: IndexedTableModel[]) => prevTables.filter(prevTable => prevTable.id !== table.id))
+  }
+
   return (
-    <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable }}>
+    <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable, deleteTable }}>
       <div className={styles.landing}>
         <Topbar />
         <Main />
