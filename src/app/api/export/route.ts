@@ -1,6 +1,6 @@
 
-import type { NextApiRequest, NextApiResponse } from "next";
 import fs from 'fs';
+import { NextRequest, NextResponse } from "next/server";
 
 const DEFAULT_FILENAME = "db";
 
@@ -33,7 +33,7 @@ const findAvailableFilename = (filename: string): string => {
  */
 const writeToFile = (data: string, filename: string): boolean => {
   try {
-    fs.writeFileSync(`./public/export/${filename}`, data);
+    fs.writeFileSync(`public/export/${filename}`, data);
 
     return true;
 
@@ -44,15 +44,19 @@ const writeToFile = (data: string, filename: string): boolean => {
   }
 }
 
-export function POST(req: NextApiRequest, res: NextApiResponse) {
-  const { data, filename }: ExportJSONBodyProps = JSON.parse(req.body);
+export async function POST(request: NextRequest) {
+  const { data, filename }: ExportJSONBodyProps = await request.json();
 
   const usableFilename = findAvailableFilename(filename);
 
   if (writeToFile(data, usableFilename)) {
-    res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
-    res.send(`${process.env.WEBAPP_URL}/public/export/${filename}`);
+    return NextResponse.redirect(`${process.env.WEBAPP_URL}/export/${usableFilename}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Disposition': `attachment; filename=${usableFilename}`,
+      }
+    })
   } else {
-    res.status(500).json({ success: false });
+    return NextResponse.json({ message: "Error while exporting" });
   }
 }

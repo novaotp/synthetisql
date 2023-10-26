@@ -5,10 +5,12 @@ import { useContext } from 'react';
 // Internal
 import styles from './index.module.scss';
 import TablesContext from '@contexts/TablesContext';
+import { useRouter } from 'next/navigation';
 
 /** A sidebar tool for editing tables. */
 const Topbar = (): JSX.Element => {
   const { tables } = useContext(TablesContext);
+  const router = useRouter();
 
   const handleExport = async (): Promise<void> => {
     let data = "";
@@ -26,7 +28,7 @@ const Topbar = (): JSX.Element => {
         data: data,
         filename: 'db'
       }),
-    })
+    });
   }
 
   return (
