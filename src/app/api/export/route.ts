@@ -1,62 +1,50 @@
 
+import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
-import { NextRequest, NextResponse } from "next/server";
 
-const DEFAULT_FILENAME = "db";
+const EXPORT_DIR = "public/export";
 
-interface ExportJSONBodyProps {
-  /** The data to store in the file. */
-  data: any;
-  /** The name of the file in whch the data will be stored. */
+interface PostRequestProps {
+  /** The data to store. */
+  data: string,
+  /**
+   * The filename to use, or a derived one if it already exists.
+   * 
+   * Automatically adds the `.json` extension.
+   */
   filename: string,
 }
 
-/**
- * Finds an available filename (adds numbers until it succeeds) and returns it.
- * @param filename The default filename to use.
- */
-const findAvailableFilename = (filename: string): string => {
-  filename = `${DEFAULT_FILENAME}.json`;
-
-  let i = 0;
-  while (fs.existsSync(`./public/export/${filename}`)) {
-    filename = `${DEFAULT_FILENAME}-${++i}.json`;
-  }
-
-  return filename;
+interface PostResponseProps {
+  /** The filename of the generated file or `undefined`. */
+  filename: string | undefined,
+  /** A message. */
+  message: string,
 }
 
-/**
- * Write data to a file and returns true if it succeeded, false otherwise.
- * @param data The data to write to the file
- * @param filename The name of the file in whch the data will be stored
- */
-const writeToFile = (data: string, filename: string): boolean => {
-  try {
-    fs.writeFileSync(`public/export/${filename}`, data);
+export async function POST(request: NextRequest): Promise<NextResponse<PostResponseProps>> {
+  let { data, filename: originalFilename }: PostRequestProps = await request.json();
 
-    return true;
+  try {
+    if (!fs.existsSync(EXPORT_DIR)) {
+      fs.mkdirSync(EXPORT_DIR, { recursive: true });
+    }
+
+    let filename: string = originalFilename;
+
+    let i = 0;
+    while (fs.existsSync(`${EXPORT_DIR}/${filename}.json`)) {
+      filename = `${originalFilename}-${++i}`;
+    }
+
+    fs.writeFileSync(`${EXPORT_DIR}/${filename}.json`, data);
+
+    return NextResponse.json({ filename: `${filename}.json`, message: "Exported successfully." });
 
   } catch (err) {
     console.error(`Error while exporting : ${err}`);
-    return false;
 
-  }
-}
-
-export async function POST(request: NextRequest) {
-  const { data, filename }: ExportJSONBodyProps = await request.json();
-
-  const usableFilename = findAvailableFilename(filename);
-
-  if (writeToFile(data, usableFilename)) {
-    return NextResponse.redirect(`${process.env.WEBAPP_URL}/export/${usableFilename}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Disposition': `attachment; filename=${usableFilename}`,
-      }
-    })
-  } else {
-    return NextResponse.json({ message: "Error while exporting" });
+    return NextResponse.json({ filename: undefined,  message: `Error while exporting : ${err}` });
+    
   }
 }

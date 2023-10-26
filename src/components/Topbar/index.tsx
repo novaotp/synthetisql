@@ -5,30 +5,40 @@ import { useContext } from 'react';
 // Internal
 import styles from './index.module.scss';
 import TablesContext from '@contexts/TablesContext';
-import { useRouter } from 'next/navigation';
 
 /** A sidebar tool for editing tables. */
 const Topbar = (): JSX.Element => {
   const { tables } = useContext(TablesContext);
-  const router = useRouter();
+
+  /** The URL ending with a file to download. */
+  const download = (url: string) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = url!.split("/").at(-1)!;
+    link.click();
+  }
 
   const handleExport = async (): Promise<void> => {
-    let data = "";
-
-    tables.forEach((table) => {
-      data += JSON.stringify(table) + "\n";
-    });
-
-    fetch('/api/export', {
+    const url = '/api/export';
+    const init: RequestInit = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        data: data,
+        data: JSON.stringify(tables),
         filename: 'db'
       }),
-    });
+    }
+
+    const response = await fetch(url, init);
+    const { filename, message } = await response.json();
+
+    if (!filename) {
+      return alert(message);
+    }
+
+    download(`${process.env.NEXT_PUBLIC_WEBAPP_URL}/export/${filename}`);
   }
 
   return (
