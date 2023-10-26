@@ -35,7 +35,7 @@ const Landing = (): JSX.Element => {
    */
   const addTable = (table: TableModel = TableModelImpl.default()) => {
     let id: string = uniqueId();
-    
+
     setTables((prevTables: IndexedTableModel[]) => [...prevTables, { id: id, table }])
   }
 
@@ -46,17 +46,14 @@ const Landing = (): JSX.Element => {
   const updateTable = (table: IndexedTableModel) => {
     setTables((prevTables: IndexedTableModel[]) => prevTables.map(prevTable => prevTable.id === table.id ? table : prevTable))
   }
-  
+
   return (
-    <div className={styles.landing}>
-      <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable }}>
-        <Sidebar />
-        <div className={styles.vertical}>
-          <Topbar />
-          <Main />
-        </div>
-      </TablesContext.Provider>
-    </div>
+    <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable }}>
+      <div className={styles.landing}>
+        <Topbar />
+        <Main />
+      </div>
+    </TablesContext.Provider>
   )
 }
 

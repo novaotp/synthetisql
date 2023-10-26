@@ -2,7 +2,7 @@
 "use client";
 
 // React
-import { useEffect, useRef, useContext } from 'react';
+import { useEffect, useRef, useContext, useState } from 'react';
 
 // Internal
 
@@ -23,6 +23,7 @@ import TablesContext from '@/libs/contexts/TablesContext';
 /** The area for moving the tables around. */
 const Main = (): JSX.Element => {
   const { selectedTable, setSelectedTable, tables } = useContext(TablesContext);
+  const [isContextMenuOnTable, setIsContextMenuOnTable] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLMenuElement>(null);
 
@@ -41,11 +42,17 @@ const Main = (): JSX.Element => {
       event.preventDefault();
       const element = event.target as HTMLElement;
 
-      if (ref.current!.contains(element) && !(element).hasAttribute("data-table")) {
-        menuRef.current!.style.display = "flex";
-        menuRef.current!.style.top = `${event.clientY - Number(styleVars.topbarHeightNum)}px`;
-        menuRef.current!.style.left = `${event.clientX - Number(styleVars.sidebarWidthNum)}px`;
+      if (!ref.current!.contains(element)) return;
+
+      if ((element).hasAttribute("data-table")) {
+        setIsContextMenuOnTable(true);
+      } else {
+        setIsContextMenuOnTable(false);
       }
+
+      menuRef.current!.style.display = "flex";
+      menuRef.current!.style.top = `${event.clientY - Number(styleVars.topbarHeightNum)}px`;
+      menuRef.current!.style.left = `${event.clientX}px`;
     }
 
     document.addEventListener('click', handleLeftClick);
@@ -60,7 +67,7 @@ const Main = (): JSX.Element => {
   return (
     <div ref={ref} className={styles.main}>
       { tables.map((table: IndexedTableModel, index: number) => <Table key={index} table={table} /> ) }
-      <ContextMenu menuRef={menuRef} />
+      <ContextMenu menuRef={menuRef} isOnTable={isContextMenuOnTable} />
     </div>
   )
 }
