@@ -3,16 +3,15 @@
 import { Metadata } from "next";
 
 // Internal
-import Landing from "./page.components";
+import App from "./page.components";
 
 export const metadata: Metadata = {
-  title: "Home - SynthetiSQL"
+  title: "App - SynthetiSQL"
 }
-
 
 const Page = (): JSX.Element => {
   return (
-    <Landing />
+    <App />
   )
 }
 

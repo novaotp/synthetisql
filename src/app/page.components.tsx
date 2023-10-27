@@ -1,66 +1,53 @@
 
 'use client';
 
-// React
-import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+// MUI Icons
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+
+// Next
+import Image from 'next/image';
 
 // Internal
-
-/// -- Styling -- ///
 import styles from './page.module.scss';
-
-/// -- Components -- ///
-import Main from '@components/Main';
-import Topbar from "@components/Topbar";
-
-/// -- Models -- ///
-import IndexedTableModel, { TableModel } from '@models/table';
-import TableModelImpl from '@models/table/impl';
-
-/// -- Libs -- ///
-import TablesContext from '@/libs/contexts/TablesContext';
+import LogoSynthetiSQL from '/public/logo_transparent_text_right.png';
+import Link from 'next/link';
 
 /** The main component of the landing page. */
 const Landing = (): JSX.Element => {
-  const [selectedTable, setSelectedTable] = useState<IndexedTableModel | undefined>(undefined);
-  const [tables, setTables] = useState<IndexedTableModel[]>([]);
-
-  /**
-   * Adds a new table to the list of tables.
-   * @param table The table to add
-   */
-  const addTable = (table: TableModel = TableModelImpl.default()) => {
-    setTables((prevTables: IndexedTableModel[]) => [...prevTables, { id: uuidv4(), table, position: { x: 0, y: 0 } }])
-  }
-
-  /**
-   * Updates a table in the list of tables if the table is defined.
-   * @param table The indexed table to update
-   */
-  const updateTable = (table: IndexedTableModel | undefined) => {
-    if (!table) return;
-
-    setTables((prevTables: IndexedTableModel[]) => prevTables.map(prevTable => prevTable.id === table.id ? table : prevTable))
-  }
-
-  /**
-   * Deletes a table from the list of tables if the table is defined.
-   * @param table The indexed table to update
-   */
-  const deleteTable = (table: IndexedTableModel | undefined) => {
-    if (!table) return;
-
-    setTables((prevTables: IndexedTableModel[]) => prevTables.filter(prevTable => prevTable.id !== table.id))
-  }
-
   return (
-    <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable, deleteTable }}>
-      <div className={styles.landing}>
-        <Topbar />
-        <Main />
+    <div className={styles.wrapper}>
+      <div className={styles.nav}>
+        <Link href="/">
+          <Image
+            src={LogoSynthetiSQL}
+            alt="Logo SynthetiSQL"
+            height="60"
+            width="240"
+          />
+        </Link>
+        <div className={styles.rightGroup}>
+          <a className={styles.try} href='/app'>Try SynthetiSQL</a>
+        </div>
       </div>
-    </TablesContext.Provider>
+      <div className={styles.content}>
+        <div className={styles.landing}>
+          <div className={`${styles.box} ${styles.text}`}>
+            <h1>Unleash Your Database's Potential</h1>
+            <h2>Effortless Database Modeling and SQL Script Generation</h2>
+            <p>
+              Dive into a seamless experience with SynthetiSQL, your go-to open source
+              database modeling tool. Craft robust databases models and automatically generate
+              SQL scripts for your favorite relational database. Embrace the simplicity and
+              efficiency SynthetiSQL brings to the table.
+            </p>
+            <Link href="/app">Try it now&nbsp;&nbsp;&nbsp;&nbsp;<ArrowForwardRoundedIcon /></Link>
+          </div>
+          <div className={`${styles.box} ${styles.illustration}`}>
+            {/** Placeholder for image */}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

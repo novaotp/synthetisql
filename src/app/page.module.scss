@@ -1,8 +1,108 @@
+@import "../styles/variables.module.scss";
 
-.landing {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.wrapper {
+  .nav {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    padding: 45px 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .rightGroup {
+      position: relative;
+      height: 100%;
+
+      .try {
+        position: relative;
+        height: 100%;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: #907dff;
+        border-radius: 10px;
+      }
+    }
+  }
+
+  .content {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 150px);
+    padding: 45px;
+    display: flex;
+    flex-direction: column;
+
+    .landing {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 240px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .box {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        padding: 45px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .text {
+        position: relative;
+
+        h1,
+        h2,
+        p,
+        a {
+          position: relative;
+          margin: 20px 0;
+        }
+
+        h1 {
+          font-size: 40px;
+          font-weight: 700;
+          background: linear-gradient(90deg, #c7ebab, #703bff, #c7ebab);
+          background-size: 200% auto;
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: gradientAnimation 4s linear infinite;
+
+          @keyframes gradientAnimation {
+            0% {
+              background-position: 0% 50%;
+            }
+            100% {
+              background-position: 200% 50%;
+            }
+          }
+        }
+
+        p {
+          color: grey;
+        }
+
+        a {
+          position: relative;
+          width: 250px;
+          height: 50px;
+          background-color: #907dff;
+          color: white;
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: justify;
+          margin-bottom: 120px;
+        }
+      }
+    }
+  }
 }
