@@ -1,11 +1,11 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100vh;
 }
@@ -14,7 +14,10 @@ ul {
   list-style: none;
 }
 
-button {
+button,
+input,
+button,
+textarea {
   border: transparent;
   outline: transparent;
   cursor: pointer;
@@ -24,6 +27,8 @@ a {
   text-decoration: none;
 }
 
-input, button, textarea {
+input,
+button,
+textarea {
   font-family: inherit;
 }

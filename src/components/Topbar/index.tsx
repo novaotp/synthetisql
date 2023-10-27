@@ -12,7 +12,7 @@ import IndexedTableModel from '@models/table';
 import TablesContext from '@contexts/TablesContext';
 
 /// -- Utils -- ///
-import Transfer from '@utils/transfer';
+import { store, download, load } from '@utils/transfer';
 
 /** A sidebar tool for editing tables. */
 const Topbar = (): JSX.Element => {
@@ -20,13 +20,13 @@ const Topbar = (): JSX.Element => {
   const importRef = useRef<HTMLInputElement>(null);
 
   const handleExport = async (): Promise<void> => {
-    const { filename, message } = await Transfer.store({ path: 'public/export', data: tables, filename: 'db.synmodel' });
+    const { filename, message } = await store({ path: 'public/export', data: tables, filename: 'db.synmodel' });
 
     if (!filename) {
       return alert(message);
     }
 
-    Transfer.download(`${process.env.NEXT_PUBLIC_WEBAPP_URL}/export`, filename);
+    download('export', filename);
   }
 
   const handleImport = async (): Promise<void> => {
@@ -34,13 +34,27 @@ const Topbar = (): JSX.Element => {
 
     if (!files) return;
 
-    setTables(JSON.parse(await Transfer.load(files[0])) as IndexedTableModel[]);
+    const newTables: IndexedTableModel[] = JSON.parse(await load(files[0]));
+
+    let response = true;
+    if (tables.length > 0) {
+      response = window.confirm('Are you sure you want to overwrite the existing tables ?');
+    }
+
+    if (response) {
+      setTables(newTables);
+    }
   }
 
   return (
     <div className={styles.topbar}>
-      <button onClick={handleExport} disabled={tables.length === 0}>Export</button>
-      <input ref={importRef} type="file" accept=".synmodel" onChange={handleImport} />
+      <div className={styles.fileOperations}>
+        <button className={`${styles.export} ${styles.item}`} onClick={handleExport}>Export</button>
+        <input className={styles.hiddenFileInput} type="file" ref={importRef} onChange={handleImport} accept=".synmodel" />
+        <input className={`${styles.import} ${styles.item}`} type="button" value="Import" onClick={() => importRef.current!.click()} />
+      </div>
+      <div></div> {/** Placeholder for center data such as diagram's name. */}
+      <div></div> {/** Placeholder for profile data when auth added. */}
     </div>
   )
 }

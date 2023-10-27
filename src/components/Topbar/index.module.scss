@@ -5,8 +5,48 @@
   width: 100%;
   height: $topbar-height;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column;
-  background-color: rgb(17, 60, 255);
+  padding: 20px;
+  background-color: #907DFF;
+
+  .fileOperations {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    .item {
+      position: relative;
+      height: 100%;
+      width: 120px;
+      color: white;
+      background-color: transparent;
+      border-radius: 10px;
+      font-size: 18px;
+      margin-right: 20px;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+
+    .export {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 1px;
+        height: 100%;
+        background-color: white;
+      }
+    }
+
+    .hiddenFileInput {
+      display: none;
+    }
+  }
 }

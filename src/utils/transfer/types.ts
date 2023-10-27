@@ -1,5 +1,5 @@
 
-interface Store {
+interface StoreProps {
   /** The relative path of the directory in which the file will be stored. */
   path: string,
   /** The serializable data to be written to the file. */
@@ -12,4 +12,4 @@ interface Store {
   filename: string,
 }
 
-export default Store;
+export default StoreProps;
