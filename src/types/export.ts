@@ -23,5 +23,12 @@ interface PostResponseProps {
   message: string,
 }
 
-export type { PostRequestProps };
+interface DeleteRequestProps {
+  /** The relative path of the directory in which the file is stored. */
+  path: string,
+   /**  The name of the file to delete (with extension). */
+   filename: string,
+}
+
+export type { PostRequestProps, DeleteRequestProps };
 export default PostResponseProps;

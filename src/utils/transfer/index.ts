@@ -1,5 +1,5 @@
 
-import PostResponseProps, { PostRequestProps } from "@/types/export";
+import PostResponseProps, { DeleteRequestProps, PostRequestProps } from "@/types/export";
 import StoreProps from "./types";
 
 /** Stores the data in a file and returns its name (with extension). */
@@ -25,12 +25,12 @@ const store = async ({ path, filename, data }: StoreProps): Promise<PostResponse
 /**
  * Downloads a file for the user.
  * @param path The relative path of the directory in which the file is stored
- * @param file The file to download
+ * @param filename The name of the file to download (with extension)
  */
-const download = (path: string, file: string): void => {
+const download = (path: string, filename: string): void => {
   const link = document.createElement('a');
-  link.href = `${process.env.NEXT_PUBLIC_WEBAPP_URL}/${path}/${file}`;
-  link.download = file;
+  link.href = `${process.env.NEXT_PUBLIC_WEBAPP_URL}/${path}/${filename}`;
+  link.download = filename;
   link.click();
 }
 
@@ -54,4 +54,27 @@ const load = (file: File): Promise<string> => {
   });
 }
 
-export { store, download, load };
+/**
+ * Deletes a file that matches the given filename.
+ * @param path The relative path of the directory in which the file is stored.
+ * @param filename The name of the file to delete
+ */
+const discard = async (path: string, filename: string): Promise<void> => {
+  const url = `/api/export`;
+  const body: DeleteRequestProps = {
+    path,
+    filename,
+  }
+  const init: RequestInit = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  };
+
+  const response = await fetch(url, init);
+  return await response.json();
+}
+
+export { store, download, load, discard };

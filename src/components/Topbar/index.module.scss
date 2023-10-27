@@ -7,8 +7,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 20px 45px;
   background-color: #907DFF;
+
+  .segment {
+    position: relative;
+    height: 100%;
+    width: calc( 100% / 3 );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:first-of-type {
+      justify-content: flex-start;
+    }
+
+    &:last-of-type {
+      justify-content: flex-end;
+    }
+  }
+
+  .link {
+    position: relative;
+    width: 160px;
+    height: 40px;
+  }
 
   .fileOperations {
     position: relative;
