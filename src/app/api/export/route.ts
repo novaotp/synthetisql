@@ -5,31 +5,32 @@ import fs from 'fs';
 // Internal
 import PostResponseProps, { PostRequestProps } from '@/types/export';
 
-const EXPORT_DIR = "public/export";
-
 export async function POST(request: NextRequest): Promise<NextResponse<PostResponseProps>> {
-  let { data, filename: originalFilename, extension }: PostRequestProps = await request.json();
+  let { path, data, filename }: PostRequestProps = await request.json();
+  const [name, extension] = filename.split('.');
 
   try {
-    if (!fs.existsSync(EXPORT_DIR)) {
-      fs.mkdirSync(EXPORT_DIR, { recursive: true });
+    if (!fs.existsSync(path)) {
+      fs.mkdirSync(path, { recursive: true });
     }
-
-    let filename: string = originalFilename;
 
     let i = 0;
-    while (fs.existsSync(`${EXPORT_DIR}/${filename}.${extension}`)) {
-      filename = `${originalFilename}-${++i}`;
+    while (true) {
+      if (!fs.existsSync(`${path}/${filename}`)) {
+        break;
+      }
+
+      filename = `${name}-${++i}.${extension}`;
     }
 
-    fs.writeFileSync(`${EXPORT_DIR}/${filename}.${extension}`, data);
+    fs.writeFileSync(`${path}/${filename}`, data);
 
-    return NextResponse.json({ file: `${filename}.${extension}`, message: "Exported successfully." });
+    return NextResponse.json({ filename, message: "Exported successfully." });
 
   } catch (err) {
     console.error(`Error while exporting : ${err}`);
 
-    return NextResponse.json({ file: undefined,  message: `Error while exporting : ${err}` });
+    return NextResponse.json({ filename: undefined,  message: `Error while exporting : ${err}` });
     
   }
 }

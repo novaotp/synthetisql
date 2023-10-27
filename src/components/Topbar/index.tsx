@@ -20,13 +20,13 @@ const Topbar = (): JSX.Element => {
   const importRef = useRef<HTMLInputElement>(null);
 
   const handleExport = async (): Promise<void> => {
-    const { file, message } = await Transfer.store(tables, 'db', 'synmodel');
+    const { filename, message } = await Transfer.store({ path: 'public/export', data: tables, filename: 'db.synmodel' });
 
-    if (!file) {
+    if (!filename) {
       return alert(message);
     }
 
-    Transfer.download(`${process.env.NEXT_PUBLIC_WEBAPP_URL}/export`, file);
+    Transfer.download(`${process.env.NEXT_PUBLIC_WEBAPP_URL}/export`, filename);
   }
 
   const handleImport = async (): Promise<void> => {
