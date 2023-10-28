@@ -1,6 +1,6 @@
 
 import { load } from "..";
-import Table from '@/models/table/implementation';
+import Table from '@models/table';
 import Simulate from "@utils/simulate";
 
 it("reads content from file", async () => {

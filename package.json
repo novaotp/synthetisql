@@ -9,6 +9,7 @@
   },
   "description": "A free and open source MLD builder capable of generating SQL scripts for every relational database.",
   "scripts": {
+    "test": "jest",
     "dev": "next dev -p 5173",
     "build": "next build",
     "start": "next start",
