@@ -23,10 +23,11 @@
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@models/*": ["src/models/*"],
+      "@fonts": ["src/assets/fonts/index.ts"],
       "@hooks/*": ["src/libs/hooks/*"],
       "@utils/*": ["src/utils/*"],
       "@contexts/*": ["src/libs/contexts/*"],
-      "@styles/*": ["src/styles/*"],
+      "@styles/*": ["src/assets/styles/*"],
       "@types/*": ["src/types/*"],
     }
   },

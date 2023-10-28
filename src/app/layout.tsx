@@ -1,6 +1,6 @@
 
-import poppins from '@/fonts';
-import './globals.scss';
+import poppins from '@fonts';
+import '@styles/globals.scss';
 
 export default function RootLayout({
   children,
