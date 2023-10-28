@@ -3,7 +3,7 @@
 import { type Dispatch, type SetStateAction, createContext } from "react";
 
 // Internal
-import IndexedTableModel, { TableModel } from "@models/table";
+import { TableModel, IndexedTableModel } from "@models/table";
 
 interface TablesContextProps {
   /** The currently selected indexed table. */

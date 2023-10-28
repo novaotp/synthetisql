@@ -16,7 +16,7 @@ import ContextMenu from './components/ContextMenu';
 import TableProperties from './components/TableProperties';
 
 /// -- Models -- ///
-import IndexedTableModel from '@models/table';
+import { IndexedTableModel } from '@models/table';
 
 /// -- Libs -- ///
 import TablesContext from '@contexts/TablesContext';

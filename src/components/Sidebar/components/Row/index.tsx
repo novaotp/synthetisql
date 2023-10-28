@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 // Internal
 import styles from './index.module.scss';
-import IndexedRowModel, { RowModel, RowModelKey, rowTypes } from '@models/row';
+import IndexedRowModel, { RowModel, RowModelKey, rowTypes } from '@/models/row/interfaces';
 
 interface RowProps {
   /** The indexed row to render. */

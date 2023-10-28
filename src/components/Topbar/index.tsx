@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 import LogoSynthetiSQL from '/public/logo_transparent_text_right.png';
 
 /// -- Models -- ///
-import IndexedTableModel from '@models/table';
+import { IndexedTableModel } from '@models/table';
 
 /// -- Libs -- ///
 import TablesContext from '@contexts/TablesContext';

@@ -15,8 +15,7 @@ import Main from '@components/Main';
 import Topbar from "@components/Topbar";
 
 /// -- Models -- ///
-import IndexedTableModel, { TableModel } from '@models/table';
-import TableModelImpl from '@models/table/impl';
+import Table, { IndexedTableModel, TableModel } from '@models/table';
 
 /// -- Libs -- ///
 import TablesContext from '@/libs/contexts/TablesContext';
@@ -30,7 +29,7 @@ const App = (): JSX.Element => {
    * Adds a new table to the list of tables.
    * @param table The table to add
    */
-  const addTable = (table: TableModel = TableModelImpl.default()) => {
+  const addTable = (table: TableModel = Table.default()) => {
     setTables((prevTables: IndexedTableModel[]) => [...prevTables, { id: uuidv4(), table, position: { x: 0, y: 0 } }])
   }
 

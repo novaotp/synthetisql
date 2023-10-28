@@ -1,5 +1,5 @@
 
-import { RowModel } from "./index";
+import { RowModel } from "./interfaces";
 
 /**
  * The row's implmentation. Contains useful methods.

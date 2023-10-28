@@ -3,6 +3,7 @@
 
 // React
 import { useState, useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 // Internal
 
@@ -14,12 +15,7 @@ import Header from './components/Header';
 import Row from './components/Row';
 
 /// -- Models -- ///
-import IndexedTableModel from '@models/table';
-import IndexedRowModel, { RowModelKey } from '@models/row';
-import RowImpl from '@models/row/impl';
-
-/// -- Utils -- ///
-import uniqueId from '@utils/uniqueId';
+import RowImpl, { IndexedRowModel, RowModelKey } from '@models/row';
 
 /// -- Libs -- ///
 import TablesContext from '@contexts/TablesContext';
@@ -45,7 +41,7 @@ const Sidebar = (): JSX.Element => {
     if (!selectedTable) return;
 
     const defaultRow: IndexedRowModel = {
-      id: uniqueId(),
+      id: uuidv4(),
       row: RowImpl.default()
     }
 

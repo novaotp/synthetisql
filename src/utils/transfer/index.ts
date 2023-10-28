@@ -4,7 +4,7 @@ import StoreProps from "./types";
 
 /** Stores the data in a file and returns its name (with extension). */
 const store = async ({ path, filename, data }: StoreProps): Promise<PostResponseProps> => {
-  const url = '/api/export';
+  const url = `${process.env.NEXT_PUBLIC_WEBAPP_URL ?? 'http://localhost:5173'}/api/export`;
   const body: PostRequestProps = {
     path,
     data: JSON.stringify(data),
@@ -29,7 +29,7 @@ const store = async ({ path, filename, data }: StoreProps): Promise<PostResponse
  */
 const download = (path: string, filename: string): void => {
   const link = document.createElement('a');
-  link.href = `${process.env.NEXT_PUBLIC_WEBAPP_URL}/${path}/${filename}`;
+  link.href = `${process.env.NEXT_PUBLIC_WEBAPP_URL ?? 'http://localhost:5173'}/${path}/${filename}`;
   link.download = filename;
   link.click();
 }
@@ -60,7 +60,7 @@ const load = (file: File): Promise<string> => {
  * @param filename The name of the file to delete
  */
 const discard = async (path: string, filename: string): Promise<void> => {
-  const url = `/api/export`;
+  const url = `${process.env.NEXT_PUBLIC_WEBAPP_URL ?? 'http://localhost:5173'}/api/export`;
   const body: DeleteRequestProps = {
     path,
     filename,

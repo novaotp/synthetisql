@@ -7,7 +7,7 @@ import Draggable, { type ControlPosition, type DraggableData, type DraggableEven
 import styles from './index.module.scss';
 
 /// -- Models -- ///
-import IndexedTableModel from '@models/table';
+import { IndexedTableModel } from '@models/table';
 
 /// -- Libs -- ///
 import TablesContext from '@/libs/contexts/TablesContext';
