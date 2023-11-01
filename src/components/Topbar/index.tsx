@@ -15,7 +15,7 @@ import { IndexedTableModel } from '@models/table';
 import TablesContext from '@contexts/TablesContext';
 
 /// -- Utils -- ///
-import Transfer from '@utils/transfer';
+import { Transfer } from '@utils/transfer';
 
 /** A sidebar tool for editing tables. */
 const Topbar = (): JSX.Element => {
