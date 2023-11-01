@@ -15,12 +15,8 @@ import Table from '../Table';
 import ContextMenu from './components/ContextMenu';
 import TableProperties from './components/TableProperties';
 
-/// -- Models -- ///
-import { IndexedTableModel } from '@models/table';
-
 /// -- Libs -- ///
 import TablesContext from '@contexts/TablesContext';
-import { useDatabase } from '@/libs/contexts/mockDB';
 
 /** The area for moving the tables around. */
 const Main = (): JSX.Element => {
