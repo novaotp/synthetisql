@@ -15,7 +15,7 @@ import { IndexedTableModel } from '@models/table';
 import TablesContext from '@contexts/TablesContext';
 
 /// -- Utils -- ///
-import { Transfer } from '@utils/transfer';
+import { store, load, download, discard } from '@utils/transfer';
 
 /** A sidebar tool for editing tables. */
 const Topbar = (): JSX.Element => {
@@ -23,14 +23,56 @@ const Topbar = (): JSX.Element => {
   const importRef = useRef<HTMLInputElement>(null);
 
   const handleExport = async (): Promise<void> => {
-    const { filename, message } = await Transfer.store({ path: 'public/export', data: tables, filename: 'db.synmodel' });
+    const filename = await store('public/export', 'db.synmodel', tables);
 
     if (!filename) {
-      return alert(message);
+      return alert("An error occurred while exporting the file.");
     }
 
-    Transfer.download('export', filename);
-    await Transfer.discard('public/export', filename);
+    download('export', filename);
+    await discard('public/export', filename);
+  }
+
+  const validateModelFormat = (model: any[]): boolean => {
+    for (const indexedTable of model) {
+      console.log(indexedTable);
+      if (indexedTable.id === undefined) {
+        return false;
+      }
+
+      if (!("x" in indexedTable.position && "y" in indexedTable.position)) {
+        return false;
+      }
+
+      if (!("name" in indexedTable.table)) {
+        return false;
+      }
+
+      for (const indexedRow of indexedTable.table.rows) {
+        if (indexedRow.id !== undefined) {
+          return false;
+        }
+
+        if (!("name" in indexedRow.row &&
+            "type" in indexedRow.row &&
+            "precision" in indexedRow.row &&
+            "primaryKey" in indexedRow.row &&
+            "foreignKey" in indexedRow.row &&
+            "autoIncrement" in indexedRow.row &&
+            "notNull" in indexedRow.row &&
+            "unique" in indexedRow.row &&
+            "check" in indexedRow.row &&
+            "default" in indexedRow.row &&
+            "onUpdate" in indexedRow.row &&
+            "onDelete" in indexedRow.row &&
+            "comment" in indexedRow.row
+        )) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   const handleImport = async (): Promise<void> => {
@@ -38,7 +80,14 @@ const Topbar = (): JSX.Element => {
 
     if (!files) return;
 
-    const newTables: IndexedTableModel[] = JSON.parse(await Transfer.load(files[0]));
+    const data = JSON.parse(await load(files[0]));
+
+    if (!validateModelFormat(data)) {
+      alert("Invalid file format");
+      return;
+    }
+
+    const newTables: IndexedTableModel[] = data;
 
     let response = true;
     if (tables.length > 0) {

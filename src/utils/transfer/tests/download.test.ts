@@ -1,5 +1,5 @@
 
-import { Transfer } from "..";
+import { store, download } from "..";
 
 it('creates a link element and triggers a download', async () => {
   const spy = jest.spyOn(document, 'createElement');
@@ -8,9 +8,11 @@ it('creates a link element and triggers a download', async () => {
   const baseFilename = 'db.synmodel';
   const data = { test: 'test' };
 
-  const { filename } = await Transfer.store({ path, data, filename: baseFilename });
+  const filename = await store(path, baseFilename, data);
 
-  Transfer.download('export', filename!);
+  expect(filename).toBeDefined();
+
+  download('export', filename!);
 
   expect(spy).toHaveBeenCalledWith('a');
 

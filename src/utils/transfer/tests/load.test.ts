@@ -1,5 +1,5 @@
 
-import { Transfer } from '..';
+import { load } from '..';
 import Table from '@models/table';
 import { Simulate } from "@utils/simulate";
 
@@ -9,7 +9,7 @@ it("reads content from file", async () => {
   const options = { type: "text/plain" };
 
   const file = Simulate.file([data], filename!, options);
-  const content = await Transfer.load(file);
+  const content = await load(file);
 
   expect(content).toBe(data);
 });
