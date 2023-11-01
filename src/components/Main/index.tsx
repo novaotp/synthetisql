@@ -8,7 +8,7 @@ import { useEffect, useRef, useContext, useState } from 'react';
 
 /// -- Styling -- ///
 import styles from './index.module.scss';
-import styleVars from '../../styles/variables.module.scss';
+import styleVars from '../../assets/styles/variables.module.scss';
 
 /// -- Components -- ///
 import Table from '../Table';
@@ -20,10 +20,11 @@ import { IndexedTableModel } from '@models/table';
 
 /// -- Libs -- ///
 import TablesContext from '@contexts/TablesContext';
+import { useDatabase } from '@/libs/contexts/mockDB';
 
 /** The area for moving the tables around. */
 const Main = (): JSX.Element => {
-  const { selectedTable, setSelectedTable, tables } = useContext(TablesContext);
+  const { setSelectedTable, tables } = useContext(TablesContext);
   const [isContextMenuOnTable, setIsContextMenuOnTable] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const contextMenuRef = useRef<HTMLMenuElement>(null);
@@ -44,10 +45,10 @@ const Main = (): JSX.Element => {
       contextMenuRef.current!.style.display = "none";
 
       if (
-        ref.current!.contains(element)
-        && !element.hasAttribute("data-table")
-        && !contextMenuRef.current!.contains(element)
-        && !tablePropertiesRef.current!.open
+        ref.current!.contains(element) &&
+        !element.hasAttribute("data-table") &&
+        !contextMenuRef.current!.contains(element) &&
+        !tablePropertiesRef.current!.open
       ) {
         setSelectedTable(undefined);
       }
@@ -78,7 +79,7 @@ const Main = (): JSX.Element => {
   return (
     <div ref={ref} className={styles.main}>
       <div>
-        { tables.map((table: IndexedTableModel, index: number) => <Table key={index} table={table} /> ) }
+        { tables.map((table, index) => <Table key={index} table={table} />) }
       </div>
       <ContextMenu menuRef={contextMenuRef} isOnTable={isContextMenuOnTable} openTableProperties={openTableProperties} />
       <TableProperties dialogRef={tablePropertiesRef} close={closeTableProperties} />

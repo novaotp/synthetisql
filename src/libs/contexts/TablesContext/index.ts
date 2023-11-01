@@ -1,6 +1,6 @@
 
 // React
-import { type Dispatch, type SetStateAction, createContext } from "react";
+import { createContext, type Dispatch, type SetStateAction } from "react";
 
 // Internal
 import { TableModel, IndexedTableModel } from "@models/table";

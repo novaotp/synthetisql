@@ -1,8 +1,5 @@
 
-// Test the creation of a file object.
-// Use jest to test this behavior.
-
-import Simulate from "..";
+import { Simulate } from "..";
 
 it('creates a valid file object', async () => {
   const data = "Some random data";

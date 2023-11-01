@@ -3,6 +3,9 @@
 import styles from './index.module.scss';
 import TabLabel from '../../types';
 
+/// -- Components -- ///
+import { General } from './components';
+
 interface BodyProps {
   /** If the tab is active. */
   activeTab: TabLabel,
@@ -15,7 +18,7 @@ const Body = ({ activeTab }: BodyProps): JSX.Element => {
         (() => {
           switch (activeTab) {
             case 'General':
-              return <p>Rendering the general table...</p>;
+              return <General />;
             case 'Columns':
               return <p>Rendering the columns table...</p>;
             default:

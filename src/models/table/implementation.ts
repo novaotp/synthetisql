@@ -1,6 +1,6 @@
 
 import { v4 as uuidv4 } from 'uuid';
-import IndexedTableModel, { TableModel } from "./index";
+import IndexedTableModel, { TableModel } from "./interfaces";
 
 class Table {
   /** Returns a default `TableModel` object. */
@@ -12,10 +12,10 @@ class Table {
   }
 
   /** Returns a default `IndexedTableModel` object. */
-  public static defaultIndex(): IndexedTableModel {
+  public static defaultIndex(table: TableModel = this.default()): IndexedTableModel {
     return {
       id: uuidv4(),
-      table: Table.default(),
+      table,
       position: { x: 0, y: 0 }
     };
   }

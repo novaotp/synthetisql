@@ -1,8 +1,12 @@
 
-/** A class to simulate objects. */
+/**
+ * An intrinsic object that provides functions to
+ * simulate JavaScript values/objects that aren't
+ * available by default.
+ */
 class Simulate {
   /**
-   * Simulates a file object.
+   * Simulates a {@link File} object.
    * @param fileBits The data of the file
    * @param fileName The name of the file
    * @param options Additional options
@@ -12,4 +16,4 @@ class Simulate {
   }
 }
 
-export default Simulate;
+export { Simulate };

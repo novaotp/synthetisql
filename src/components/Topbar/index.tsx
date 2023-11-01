@@ -15,7 +15,7 @@ import { IndexedTableModel } from '@models/table';
 import TablesContext from '@contexts/TablesContext';
 
 /// -- Utils -- ///
-import { store, download, load, discard } from '@utils/transfer';
+import Transfer from '@utils/transfer';
 
 /** A sidebar tool for editing tables. */
 const Topbar = (): JSX.Element => {
@@ -23,14 +23,14 @@ const Topbar = (): JSX.Element => {
   const importRef = useRef<HTMLInputElement>(null);
 
   const handleExport = async (): Promise<void> => {
-    const { filename, message } = await store({ path: 'public/export', data: tables, filename: 'db.synmodel' });
+    const { filename, message } = await Transfer.store({ path: 'public/export', data: tables, filename: 'db.synmodel' });
 
     if (!filename) {
       return alert(message);
     }
 
-    download('export', filename);
-    await discard('public/export', filename);
+    Transfer.download('export', filename);
+    await Transfer.discard('public/export', filename);
   }
 
   const handleImport = async (): Promise<void> => {
@@ -38,7 +38,7 @@ const Topbar = (): JSX.Element => {
 
     if (!files) return;
 
-    const newTables: IndexedTableModel[] = JSON.parse(await load(files[0]));
+    const newTables: IndexedTableModel[] = JSON.parse(await Transfer.load(files[0]));
 
     let response = true;
     if (tables.length > 0) {
