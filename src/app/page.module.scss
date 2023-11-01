@@ -11,8 +11,9 @@
     .rightGroup {
       position: relative;
       height: 100%;
+      display: flex;
 
-      .try {
+      .register {
         position: relative;
         height: 100%;
         width: 200px;
@@ -22,6 +23,16 @@
         color: white;
         background-color: #907dff;
         border-radius: 10px;
+        margin-right: 20px;
+
+        &.inversed {
+          background-color: white;
+          color: #907dff;
+        }
+
+        &:last-of-type {
+          margin-right: 0;
+        }
       }
     }
   }

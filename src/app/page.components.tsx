@@ -26,7 +26,8 @@ const Landing = (): JSX.Element => {
           />
         </Link>
         <div className={styles.rightGroup}>
-          <a className={styles.try} href='/app'>Try SynthetiSQL</a>
+          <a className={`${styles.register} ${styles.inversed}`} href='/auth/log-in'>Log In</a>
+          <a className={styles.register} href='/auth/sign-up'>Sign up</a>
         </div>
       </div>
       <div className={styles.content}>

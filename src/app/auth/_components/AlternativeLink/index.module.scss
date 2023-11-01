@@ -1,0 +1,14 @@
+.wrapper {
+  position: relative;
+  font-size: 12px;
+
+  .text {
+    position: relative;
+    color: grey;
+  }
+
+  .link {
+    position: relative;
+    text-decoration: underline;
+  }
+}

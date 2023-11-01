@@ -1,0 +1,23 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    position: relative;
+    width: 100%;
+    height: 50%;
+    padding: 10px 0;
+  }
+
+  .input {
+    position: relative;
+    width: 100%;
+    height: 50%;
+    padding: 0 10px;
+    border: solid 1px grey;
+    border-radius: 10px;
+  }
+}
