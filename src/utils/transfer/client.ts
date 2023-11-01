@@ -20,10 +20,7 @@ export const load = async (file: File): Promise<string> => {
     const reader = new FileReader();
 
     reader.onload = (event) => resolve(event.target!.result as string);
-    reader.onerror = (event) => {
-      console.error("An error occurred while loading a file :", event.target?.error)
-      reject('Failed to read file');
-    };
+    reader.onerror = () => reject('Failed to read file');
 
     reader.readAsText(file);
   });

@@ -33,12 +33,61 @@ const Topbar = (): JSX.Element => {
     await discard('public/export', filename);
   }
 
+  const validateModelFormat = (model: any[]): boolean => {
+    for (const indexedTable of model) {
+      console.log(indexedTable);
+      if (indexedTable.id === undefined) {
+        return false;
+      }
+
+      if (!("x" in indexedTable.position && "y" in indexedTable.position)) {
+        return false;
+      }
+
+      if (!("name" in indexedTable.table)) {
+        return false;
+      }
+
+      for (const indexedRow of indexedTable.table.rows) {
+        if (indexedRow.id !== undefined) {
+          return false;
+        }
+
+        if (!("name" in indexedRow.row &&
+            "type" in indexedRow.row &&
+            "precision" in indexedRow.row &&
+            "primaryKey" in indexedRow.row &&
+            "foreignKey" in indexedRow.row &&
+            "autoIncrement" in indexedRow.row &&
+            "notNull" in indexedRow.row &&
+            "unique" in indexedRow.row &&
+            "check" in indexedRow.row &&
+            "default" in indexedRow.row &&
+            "onUpdate" in indexedRow.row &&
+            "onDelete" in indexedRow.row &&
+            "comment" in indexedRow.row
+        )) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   const handleImport = async (): Promise<void> => {
     const files = importRef.current!.files;
 
     if (!files) return;
 
-    const newTables: IndexedTableModel[] = JSON.parse(await load(files[0]));
+    const data = JSON.parse(await load(files[0]));
+
+    if (!validateModelFormat(data)) {
+      alert("Invalid file format");
+      return;
+    }
+
+    const newTables: IndexedTableModel[] = data;
 
     let response = true;
     if (tables.length > 0) {
