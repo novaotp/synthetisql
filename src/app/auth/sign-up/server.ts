@@ -23,8 +23,6 @@ export const signUp = async (data: SignUpParams): Promise<void> => {
 
     client.release();
 
-    redirect('/auth/log-in');
-
   } catch (err) {
     console.error("Someting went wrong when signing up :", err);
 

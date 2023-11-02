@@ -1,9 +1,13 @@
 
 "use server";
 
+import { cookies } from 'next/headers';
 import { compare } from 'bcrypt';
+
+// Internal
 import { db } from "@/database";
 import { Response } from '../_interfaces/response';
+import { JWT } from '@/utils/jwt';
 
 export interface LogInParams {
   email: string,
@@ -29,6 +33,10 @@ export const logIn = async (data: LogInParams): Promise<Response> => {
     }
 
     client.release();
+
+    const token: string = await JWT.sign({ userId: user.id });
+
+    cookies().set('token', token, { maxAge })
 
     return { success: true, message: "Logged in successfully" };
 

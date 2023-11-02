@@ -1,8 +1,9 @@
 
 'use client';
 
-// React
+// React + Next
 import { FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 // Internal
 
@@ -18,6 +19,7 @@ import {
 import { signUp, type SignUpParams } from './server';
 
 export const SignUp = (): JSX.Element => {
+  const router = useRouter();
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -34,6 +36,8 @@ export const SignUp = (): JSX.Element => {
     }
 
     await signUp(data);
+
+    router.push('/auth/log-in');
   }
 
   return (
