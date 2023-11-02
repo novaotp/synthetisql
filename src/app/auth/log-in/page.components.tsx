@@ -4,6 +4,7 @@
 // React + Next
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { setCookie } from 'cookies-next';
 
 // Internal
 
@@ -26,19 +27,24 @@ export const LogIn = (): JSX.Element => {
   const handleOnSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const data: LogInParams = {
+    const params: LogInParams = {
       email: email,
       password: password
     }
 
-    const { success, message } = await logIn(data);
+    const { success, message, data } = await logIn(params);
 
     if (!success) {
       alert(message);
       return;
     }
 
-    router.push('/app/dashboard')
+    console.log(`Data`, data)
+    console.log(`Expiration time : ${data.exp}`)
+
+    setCookie("id", data.payload.userId, { expires: new Date(data.exp * 1000) });
+
+    router.push('/app/dashboard');
   }
 
   return (

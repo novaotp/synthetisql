@@ -1,7 +1,7 @@
 
 "use server";
 
-import { cookies } from 'next/headers';
+// BCrypt
 import { compare } from 'bcrypt';
 
 // Internal
@@ -34,11 +34,10 @@ export const logIn = async (data: LogInParams): Promise<Response> => {
 
     client.release();
 
-    const token: string = await JWT.sign({ userId: user.id });
+    const token = await JWT.sign({ userId: user.id });
+    const payload = await JWT.verify(token);
 
-    cookies().set('token', token, { maxAge })
-
-    return { success: true, message: "Logged in successfully" };
+    return { success: true, message: "Logged in successfully", data: payload  };
 
   } catch (err) {
     console.error("Someting went wrong when logging in :", err);
