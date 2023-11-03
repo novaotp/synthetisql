@@ -39,10 +39,7 @@ export const LogIn = (): JSX.Element => {
       return;
     }
 
-    console.log(`Data`, data)
-    console.log(`Expiration time : ${data.exp}`)
-
-    setCookie("id", data.payload.userId, { expires: new Date(data.exp * 1000) });
+    setCookie("id", data.token, { expires: new Date(data.exp * 1000) });
 
     router.push('/app/dashboard');
   }

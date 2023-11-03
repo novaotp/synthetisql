@@ -2,8 +2,6 @@
 // Next
 import { type NextRequest, NextResponse } from "next/server";
 
-export const runtime = 'nodejs';
-
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -19,16 +17,21 @@ async function isAuthenticated(request: NextRequest): Promise<boolean> {
     return false;
   }
 
-  const url = `${request.url}/api/jwt`;
-  const init: RequestInit = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ token: cookie.value }),
-  }
-  const response = await fetch(url, init);
-  const { success } = await response.json();
+  try {
+    const url = `http://localhost:5173/api/jwt`;
+    const init: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: cookie.value,
+    }
+    const response = await fetch(url, init);
+    return await response.json() as boolean;
 
-  return success;
+  } catch (e) {
+    console.error(`An error occurred while verifying the JWT in the middleware : ${e}`);
+    return false;
+
+  }
 }

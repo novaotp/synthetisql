@@ -37,7 +37,7 @@ export const logIn = async (data: LogInParams): Promise<Response> => {
     const token = await JWT.sign({ userId: user.id });
     const payload = await JWT.verify(token);
 
-    return { success: true, message: "Logged in successfully", data: payload  };
+    return { success: true, message: "Logged in successfully", data: { payload, token }  };
 
   } catch (err) {
     console.error("Someting went wrong when logging in :", err);
