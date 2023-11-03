@@ -1,0 +1,38 @@
+@import '../../../../../assets/styles/variables.module.scss';
+
+.nav {
+  position: relative;
+  width: 100%;
+  height: $topbar-height;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 45px;
+  background-color: #907DFF;
+
+  .link {
+    position: relative;
+    width: 160px;
+    height: 40px;
+  }
+
+  .rightGroup {
+    position: relative;
+
+    .profileText {
+      position: relative;
+      min-width: 160px;
+      height: 40px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
