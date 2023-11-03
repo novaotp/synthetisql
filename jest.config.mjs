@@ -7,6 +7,7 @@ const jestConfig = {
   setupFilesAfterEnv: ['jest-fetch-mock'],
   moduleDirectories: ['node_modules', 'src'],
   moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
     '^@models/(.*)$': '<rootDir>/src/models/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
   },

@@ -33,9 +33,8 @@ const Topbar = (): JSX.Element => {
     await discard('public/export', filename);
   }
 
-  const validateModelFormat = (model: any[]): boolean => {
+  const isValidModelFormat = (model: any[]): boolean => {
     for (const indexedTable of model) {
-      console.log(indexedTable);
       if (indexedTable.id === undefined) {
         return false;
       }
@@ -79,10 +78,17 @@ const Topbar = (): JSX.Element => {
     const files = importRef.current!.files;
 
     if (!files) return;
+    
+    let data = await load(files[0]) as any;
 
-    const data = JSON.parse(await load(files[0]));
+    try {
+      data = JSON.parse(data);
+    } catch {
+      alert("File is not parsable");
+      return;
+    }
 
-    if (!validateModelFormat(data)) {
+    if (!isValidModelFormat(data)) {
       alert("Invalid file format");
       return;
     }

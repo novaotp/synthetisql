@@ -14,21 +14,18 @@ ul {
   list-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 button,
 input,
-button,
 textarea {
   border: transparent;
   outline: transparent;
-  cursor: pointer;
+  font-family: inherit;
 }
 
 a {
   text-decoration: none;
-}
-
-input,
-button,
-textarea {
-  font-family: inherit;
 }
