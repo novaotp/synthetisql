@@ -39,7 +39,7 @@ export const LogIn = (): JSX.Element => {
       return;
     }
 
-    setCookie("id", data.token, { expires: new Date(data.exp * 1000) });
+    setCookie("id", data.token, { expires: new Date(data.payload.exp * 1000) });
 
     router.push('/app/dashboard');
   }

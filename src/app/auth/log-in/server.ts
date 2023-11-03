@@ -7,7 +7,7 @@ import { compare } from 'bcrypt';
 // Internal
 import { db } from "@/database";
 import { Response } from '../_interfaces/response';
-import { JWT } from '@/utils/jwt';
+import { sign, verify } from '@/utils/jwt';
 
 export interface LogInParams {
   email: string,
@@ -34,8 +34,8 @@ export const logIn = async (data: LogInParams): Promise<Response> => {
 
     client.release();
 
-    const token = await JWT.sign({ userId: user.id });
-    const payload = await JWT.verify(token);
+    const token = await sign({ userId: user.id });
+    const payload = await verify(token);
 
     return { success: true, message: "Logged in successfully", data: { payload, token }  };
 

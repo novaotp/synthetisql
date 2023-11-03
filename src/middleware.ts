@@ -1,6 +1,7 @@
 
 // Next
 import { type NextRequest, NextResponse } from "next/server";
+import { verify } from "./utils/jwt";
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -11,23 +12,18 @@ export default async function middleware(request: NextRequest) {
 }
 
 async function isAuthenticated(request: NextRequest): Promise<boolean> {
-  const cookie = request.cookies.get('id');
+  const token = request.cookies.get('id')?.value;
 
-  if (!cookie) {
+  if (!token) {
     return false;
   }
 
   try {
-    const url = `http://localhost:5173/api/jwt`;
-    const init: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: cookie.value,
-    }
-    const response = await fetch(url, init);
-    return await response.json() as boolean;
+    const data = await verify(token);
+
+    const success = (data.payload as any).userId !== undefined;
+
+    return success;
 
   } catch (e) {
     console.error(`An error occurred while verifying the JWT in the middleware : ${e}`);

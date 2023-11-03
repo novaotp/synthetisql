@@ -19,8 +19,10 @@ export const Header = () => {
       event.preventDefault();
       const element = event.target as HTMLElement;
 
-      if (profileRef.current!.contains(element)) {
-        ulRef.current!.style.display = "flex";
+      if (profileRef.current!.contains(element) || ulRef.current!.contains(element)) {
+        ulRef.current!.style.display = ulRef.current!.style.display === 'none' ? 'flex' : 'none';
+      } else {
+        ulRef.current!.style.display = "none";
       }
     }
 
@@ -43,8 +45,13 @@ export const Header = () => {
       </Link>
       <div className={styles.rightGroup}>
         <span ref={profileRef} className={styles.profileText}>My Profile here</span>
-        <ul ref={ulRef}>
-          hello
+        <ul ref={ulRef} className={styles.profileOptions}>
+          <li>
+            <Link href="/app/profile">My profile</Link>
+          </li>
+          <li>
+            <Link className={styles.disconnect} href="/auth/log-out">Disconnect</Link>
+          </li>
         </ul>
       </div>
     </nav>
