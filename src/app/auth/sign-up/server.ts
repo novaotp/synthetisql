@@ -1,7 +1,6 @@
 
 "use server";
 
-import { redirect } from 'next/navigation';
 import { hash } from 'bcrypt';
 import { db } from "@/database";
 
@@ -12,12 +11,13 @@ export interface SignUpParams {
   password: string,
 }
 
-export const signUp = async (data: SignUpParams): Promise<void> => {
+export const signUp = async ({ firstName, lastName, email, password }: SignUpParams): Promise<void> => {
   try {
     const client = await db.connect();
 
-    const query = 'INSERT INTO account (firstName, lastName, email, password) VALUES ($1, $2, $3, $4)';
-    const values = [data.firstName, data.lastName, data.email, await hash(data.password, 15)];
+    const now = Date.now();
+    const query = 'INSERT INTO account (firstName, lastName, email, password, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)';
+    const values = [firstName, lastName, email, await hash(password, 15), now, now];
 
     await client.query(query, values);
 

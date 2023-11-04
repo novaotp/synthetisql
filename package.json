@@ -7,7 +7,7 @@
     "name": "Sajidur Rahman",
     "email": "rahmansajidur30@gmail.com"
   },
-  "description": "A free and open source MLD builder capable of generating SQL scripts for every relational database.",
+  "description": "A free and open source database modeling tool capable of generating SQL scripts for every relational database.",
   "scripts": {
     "test": "jest",
     "dev": "next dev -p 5173",

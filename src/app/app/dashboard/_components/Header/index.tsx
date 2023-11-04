@@ -9,10 +9,12 @@ import Image from 'next/image';
 // Internal
 import LogoSynthetiSQL from 'public/logo_transparent_text_right.png';
 import styles from './index.module.scss';
+import { useAccount } from '@hooks/useAccount';
 
 export const Header = () => {
   const profileRef = useRef<HTMLSpanElement>(null);
   const ulRef = useRef<HTMLUListElement>(null);
+  const account = useAccount();
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -44,7 +46,7 @@ export const Header = () => {
         />
       </Link>
       <div className={styles.rightGroup}>
-        <span ref={profileRef} className={styles.profileText}>My Profile here</span>
+        <span ref={profileRef} className={styles.profileText}>{account.firstName} {account.lastName}</span>
         <ul ref={ulRef} className={styles.profileOptions}>
           <li>
             <Link href="/app/profile">My profile</Link>
