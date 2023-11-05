@@ -1,4 +1,4 @@
-@import '../../../../../assets/styles/variables.module.scss';
+@import "../../../../../assets/styles/variables.module.scss";
 
 .nav {
   position: relative;
@@ -8,7 +8,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 45px;
-  background-color: #907DFF;
+  background-color: #907dff;
 
   .link {
     position: relative;
@@ -37,7 +37,7 @@
 
     .profileOptions {
       position: absolute;
-      top: calc( 100% + 10px );
+      top: calc(100% + 10px);
       left: 0;
       width: 250px;
       display: none;
@@ -45,35 +45,17 @@
       background-color: white;
       border-radius: 10px;
       border: solid 1px grey;
+      z-index: 10;
 
-      li {
+      .disconnect {
         position: relative;
-        height: 40px;
         width: 100%;
-
-        &:first-of-type,
-        &:first-of-type a {
-          border-radius: 9px 9px 0 0;
-        }
-
-        &:last-of-type,
-        &:last-of-type a {
-          border-radius: 0 0 9px 9px;
-        }
-
-        a {
-          position: relative;
-          width: 100%;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          padding: 0 20px;
-
-          &.disconnect {
-            background-color: red;
-            color: white;
-          }
-        }
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        background-color: red;
+        color: white;
       }
     }
   }

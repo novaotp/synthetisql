@@ -1,6 +1,11 @@
 
 "use client";
 
+// MUI Icons
+import AccountTreeRoundedIcon from '@mui/icons-material/AccountTreeRounded';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+
 // React + Next
 import { useEffect, useRef } from 'react';
 import Link from "next/link";
@@ -10,6 +15,7 @@ import Image from 'next/image';
 import LogoSynthetiSQL from 'public/logo_transparent_text_right.png';
 import styles from './index.module.scss';
 import { useAccount } from '@hooks/useAccount';
+import { NavLink } from './Link';
 
 export const Nav = () => {
   const profileRef = useRef<HTMLSpanElement>(null);
@@ -48,12 +54,9 @@ export const Nav = () => {
       <div className={styles.rightGroup}>
         <span ref={profileRef} className={styles.profileText}>{account.firstName} {account.lastName}</span>
         <ul ref={ulRef} className={styles.profileOptions}>
-          <li>
-            <Link href="/app/profile">My profile</Link>
-          </li>
-          <li>
-            <Link className={styles.disconnect} href="/auth/log-out">Disconnect</Link>
-          </li>
+          <NavLink href='/app' icon={<AccountTreeRoundedIcon />} text="Diagrams" />
+          <NavLink href='/app/profile' icon={<PersonRoundedIcon />} text="Profile" />
+          <NavLink href='/auth/log-out' icon={<LogoutRoundedIcon />} text="Disconnect" />
         </ul>
       </div>
     </nav>

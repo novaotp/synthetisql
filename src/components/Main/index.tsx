@@ -19,7 +19,7 @@ import TableProperties from './components/TableProperties';
 import TablesContext from '@contexts/TablesContext';
 
 /** The area for moving the tables around. */
-const Main = (): JSX.Element => {
+const Main = ({ mainRef }: any): JSX.Element => {
   const { setSelectedTable, tables } = useContext(TablesContext);
   const [isContextMenuOnTable, setIsContextMenuOnTable] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -74,7 +74,7 @@ const Main = (): JSX.Element => {
 
   return (
     <div ref={ref} className={styles.main}>
-      <div>
+      <div ref={mainRef}>
         { tables.map((table, index) => <Table key={index} table={table} />) }
       </div>
       <ContextMenu menuRef={contextMenuRef} isOnTable={isContextMenuOnTable} openTableProperties={openTableProperties} />

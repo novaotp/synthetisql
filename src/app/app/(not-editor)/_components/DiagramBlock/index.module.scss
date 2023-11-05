@@ -1,0 +1,15 @@
+.link {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: rgb(236, 236, 236);
+  border-radius: 10px;
+  transition: 200ms ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+}

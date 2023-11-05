@@ -1,8 +1,15 @@
 
 // React + Next
-import { useContext, useRef } from 'react';
+import {
+  useContext,
+  useRef,
+  type Dispatch,
+  type SetStateAction
+} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import domtoimage from 'dom-to-image';
 
 // Internal
 import styles from './index.module.scss';
@@ -15,10 +22,21 @@ import { IndexedTableModel } from '@models/table';
 import TablesContext from '@contexts/TablesContext';
 
 /// -- Utils -- ///
-import { store, load, download, discard } from '@utils/transfer';
+import {
+  store,
+  load,
+  download,
+  discard
+} from '@utils/transfer';
+
+interface TopbarProps {
+  mainRef: any,
+  title: string,
+  setTitle: Dispatch<SetStateAction<string>>
+}
 
 /** A sidebar tool for editing tables. */
-const Topbar = (): JSX.Element => {
+const Topbar = ({ mainRef, title, setTitle }: TopbarProps): JSX.Element => {
   const { tables, setTables } = useContext(TablesContext);
   const importRef = useRef<HTMLInputElement>(null);
 
@@ -105,6 +123,14 @@ const Topbar = (): JSX.Element => {
     }
   }
 
+  const exportToImage = () => {
+    domtoimage.toPng(mainRef.current)
+      .then(async (dataUrl) => {
+          const filename = await store('public/export', 'db.png', dataUrl);
+      })
+      .catch((error) => console.error('oops, something went wrong!', error));
+  }
+
   return (
     <div className={styles.topbar}>
       <div className={styles.segment}>
@@ -121,8 +147,12 @@ const Topbar = (): JSX.Element => {
         <button className={`${styles.export} ${styles.item}`} onClick={handleExport}>Export</button>
         <input className={styles.hiddenFileInput} type="file" ref={importRef} onChange={handleImport} accept=".synmodel" />
         <input className={`${styles.import} ${styles.item}`} type="button" value="Import" onClick={() => importRef.current!.click()} />
+        <button onClick={exportToImage}>Export to image</button>
       </div>
-      <div className={styles.segment}></div> {/** Placeholder for profile data when auth added. */}
+      <div className={styles.segment}>
+        <input value={title} onChange={(event) => setTitle(event.target.value)} />
+        <Link href="/app">Exit editor</Link>
+      </div>
     </div>
   )
 }

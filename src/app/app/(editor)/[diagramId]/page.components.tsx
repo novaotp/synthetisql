@@ -2,7 +2,7 @@
 "use client";
 
 // React + Next + UUID
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from "next/navigation";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -23,14 +23,12 @@ import Table, { IndexedTableModel, TableModel } from '@models/table';
 import TablesContext from '@/libs/contexts/TablesContext';
 import { getCookie } from 'cookies-next';
 
-const isNumeric = (value: any): boolean => {
-  return !isNaN(value) && !isNaN(parseFloat(value));
-}
-
 export const Editor = () => {
   const diagramId = Number(useParams()['diagramId'] as string);
+  const mainRef = useRef<HTMLDivElement>(null);
   const [selectedTable, setSelectedTable] = useState<IndexedTableModel | undefined>(undefined);
   const [tables, setTables] = useState<IndexedTableModel[]>([]);
+  const [title, setTitle] = useState<string>("");
 
   /**
    * Adds a new table to the list of tables.
@@ -62,22 +60,23 @@ export const Editor = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await fetchDiagram(diagramId, getCookie('id')?.toString()!);
+      const diagram = await fetchDiagram(diagramId, getCookie('id')?.toString()!);
 
-      if (!data) {
+      if (!diagram) {
         alert('Could not load diagram');
         return;
       }
 
-      setTables(data);
+      setTables(diagram.data);
+      setTitle(diagram.title);
     })();
   }, []);
 
   return (
     <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable, deleteTable }}>
       <div className={styles.landing}>
-        <Topbar />
-        <Main />
+        <Topbar mainRef={mainRef} title={title} setTitle={setTitle} />
+        <Main mainRef={mainRef} />
       </div>
     </TablesContext.Provider>
   )

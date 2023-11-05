@@ -1,12 +1,15 @@
 
 "use server";
 
-import { db } from "@/database";
-import { verify } from "@/utils/jwt";
-import { cookies } from "next/headers";
+// Next
 import { redirect } from "next/navigation";
 
-export const fetchDiagram = async (id: number, jwt: string) => {
+// Internal
+import { db } from "@/database";
+import { verify } from "@/utils/jwt";
+import { Diagram } from "../../interfaces";
+
+export const fetchDiagram = async (id: number, jwt: string): Promise<Diagram | null> => {
   try {
     const userId: number = ((await verify(jwt)).payload as any).userId;
     
@@ -22,7 +25,13 @@ export const fetchDiagram = async (id: number, jwt: string) => {
     const { rows } = await client.query(query, values);
     client.release();
 
-    const diagram = JSON.parse(rows[0].data);
+    const diagram: Diagram = {
+      id: rows[0].id,
+      title: rows[0].title,
+      data: JSON.parse(rows[0].data),
+      created_at: rows[0].created_at,
+      updated_at: rows[0].updated_at
+    }
 
     return diagram;
 
