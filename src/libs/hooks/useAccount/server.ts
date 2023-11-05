@@ -23,8 +23,8 @@ export const fetchAccountData = async (token: string) => {
     }
 
     const account: Account = {
-      firstName: user.firstname,
-      lastName: user.lastname,
+      firstName: user.first_name,
+      lastName: user.last_name,
       email: user.email,
     };
 

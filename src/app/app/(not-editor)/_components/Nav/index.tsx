@@ -11,7 +11,7 @@ import LogoSynthetiSQL from 'public/logo_transparent_text_right.png';
 import styles from './index.module.scss';
 import { useAccount } from '@hooks/useAccount';
 
-export const Header = () => {
+export const Nav = () => {
   const profileRef = useRef<HTMLSpanElement>(null);
   const ulRef = useRef<HTMLUListElement>(null);
   const account = useAccount();

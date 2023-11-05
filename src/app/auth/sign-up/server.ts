@@ -15,8 +15,8 @@ export const signUp = async ({ firstName, lastName, email, password }: SignUpPar
   try {
     const client = await db.connect();
 
-    const now = Date.now();
-    const query = 'INSERT INTO account (firstName, lastName, email, password, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)';
+    const now = new Date();
+    const query = 'INSERT INTO account (first_name, last_name, email, password, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)';
     const values = [firstName, lastName, email, await hash(password, 15), now, now];
 
     await client.query(query, values);

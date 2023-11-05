@@ -1,0 +1,13 @@
+.block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 750px;
+  height: 500px;
+
+  .header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+}

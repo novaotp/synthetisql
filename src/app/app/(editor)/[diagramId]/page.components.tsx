@@ -1,14 +1,16 @@
 
-'use client';
+"use client";
 
-// React
-import { useState } from 'react';
+// React + Next + UUID
+import { useState, useEffect } from 'react';
+import { useParams } from "next/navigation";
 import { v4 as uuidv4 } from 'uuid';
 
 // Internal
 
 /// -- Styling -- ///
 import styles from './page.module.scss';
+import { fetchDiagram } from './server';
 
 /// -- Components -- ///
 import Main from '@components/Main';
@@ -19,9 +21,14 @@ import Table, { IndexedTableModel, TableModel } from '@models/table';
 
 /// -- Libs -- ///
 import TablesContext from '@/libs/contexts/TablesContext';
+import { getCookie } from 'cookies-next';
 
-/** The main component of the app page. */
-const App = (): JSX.Element => {
+const isNumeric = (value: any): boolean => {
+  return !isNaN(value) && !isNaN(parseFloat(value));
+}
+
+export const Editor = () => {
+  const diagramId = Number(useParams()['diagramId'] as string);
   const [selectedTable, setSelectedTable] = useState<IndexedTableModel | undefined>(undefined);
   const [tables, setTables] = useState<IndexedTableModel[]>([]);
 
@@ -53,6 +60,19 @@ const App = (): JSX.Element => {
     setTables((prevTables: IndexedTableModel[]) => prevTables.filter(prevTable => prevTable.id !== table.id))
   }
 
+  useEffect(() => {
+    (async () => {
+      const data = await fetchDiagram(diagramId, getCookie('id')?.toString()!);
+
+      if (!data) {
+        alert('Could not load diagram');
+        return;
+      }
+
+      setTables(data);
+    })();
+  }, []);
+
   return (
     <TablesContext.Provider value={{ selectedTable, setSelectedTable, tables, setTables, addTable, updateTable, deleteTable }}>
       <div className={styles.landing}>
@@ -62,5 +82,3 @@ const App = (): JSX.Element => {
     </TablesContext.Provider>
   )
 }
-
-export default App;

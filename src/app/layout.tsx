@@ -1,12 +1,9 @@
 
 import poppins from '@fonts';
 import '@styles/globals.scss';
+import { ChildrenProps } from './_interfaces';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: ChildrenProps) {
   return (
     <html lang="en">
       <head>

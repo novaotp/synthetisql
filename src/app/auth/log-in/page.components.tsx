@@ -41,7 +41,7 @@ export const LogIn = (): JSX.Element => {
 
     setCookie("id", data.token, { expires: new Date(data.payload.exp * 1000) });
 
-    router.push('/app/dashboard');
+    router.push('/app');
   }
 
   return (
