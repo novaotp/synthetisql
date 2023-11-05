@@ -16,13 +16,14 @@ ul {
 
 button {
   cursor: pointer;
+  border: transparent;
+  outline: transparent;
 }
 
 button,
 input,
+select,
 textarea {
-  border: transparent;
-  outline: transparent;
   font-family: inherit;
 }
 
