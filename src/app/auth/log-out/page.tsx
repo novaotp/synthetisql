@@ -1,8 +1,8 @@
 
 "use client";
 
-import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import { deleteCookie } from "cookies-next";
 
 const Page = (): void => {
   const router = useRouter();

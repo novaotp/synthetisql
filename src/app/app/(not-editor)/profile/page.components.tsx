@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useAccount } from "@hooks/useAccount";
+import { useAccount } from "@libs/hooks/useAccount";
 
 export const Profile = () => {
   const account = useAccount();

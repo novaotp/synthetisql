@@ -6,7 +6,6 @@ import { compare } from 'bcrypt';
 
 // Internal
 import { db } from "@src/database";
-import { Response } from '../_interfaces/response';
 import { sign, verify } from '@utils/jwt';
 
 export interface LogInParams {
@@ -14,7 +13,7 @@ export interface LogInParams {
   password: string,
 }
 
-export const logIn = async (data: LogInParams): Promise<Response> => {
+export const logIn = async (data: LogInParams) => {
   try {
     const client = await db.connect();
 
@@ -26,10 +25,10 @@ export const logIn = async (data: LogInParams): Promise<Response> => {
 
     if (!user || !(await compare(data.password, user.password))) {
       if (!user) {
-        return { success: false, message: "This user doesn't exist" };
+        return { message: "This user doesn't exist", data: undefined };
       }
 
-      return { success: false, message: "The passwords don't match" };
+      return { message: "The passwords don't match", data: undefined };
     }
 
     client.release();
@@ -37,12 +36,12 @@ export const logIn = async (data: LogInParams): Promise<Response> => {
     const token = await sign({ userId: user.id });
     const payload = await verify(token);
 
-    return { success: true, message: "Logged in successfully", data: { payload, token }  };
+    return { message: undefined, data: { payload, token } };
 
   } catch (err) {
     console.error("Someting went wrong when logging in :", err);
 
-    return { success: false, message: "Internal Server Error" };
+    return { message: "Internal Server Error", data: undefined };
 
   }
 }

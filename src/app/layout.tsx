@@ -1,9 +1,9 @@
 
-import poppins from '@fonts';
-import '@styles/globals.scss';
-import { ChildrenProps } from './_interfaces';
+import poppins from '@assets/fonts';
+import '@assets/styles/globals.scss';
+import { ChildrenProps } from './interfaces';
 
-export default function RootLayout({ children }: ChildrenProps) {
+const RootLayout = ({ children }: ChildrenProps): JSX.Element => {
   return (
     <html lang="en">
       <head>
@@ -16,3 +16,5 @@ export default function RootLayout({ children }: ChildrenProps) {
     </html>
   )
 }
+
+export default RootLayout;

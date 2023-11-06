@@ -1,5 +1,5 @@
 
-import { ChildrenProps } from '../../_interfaces';
+import { ChildrenProps } from '../../interfaces';
 import {
   Window,
   Nav,

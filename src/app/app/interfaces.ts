@@ -1,5 +1,5 @@
 
-import { IndexedTableModel } from "@/models/table";
+import { IndexedTableModel } from "@models/table";
 
 export interface Diagram {
   id: number,

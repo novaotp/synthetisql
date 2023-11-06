@@ -7,17 +7,17 @@ import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next';
 
 // Internal
+import { LogInParams, logIn } from './server';
 
 /// -- Components -- ///
 import {
   Input,
   AlternativeLink,
-  Button,
+  Submit,
   Form,
   Header,
   Window
 } from '../_components';
-import { LogInParams, logIn } from './server';
 
 export const LogIn = (): JSX.Element => {
   const router = useRouter();
@@ -32,14 +32,14 @@ export const LogIn = (): JSX.Element => {
       password: password
     }
 
-    const { success, message, data } = await logIn(params);
+    const { message, data } = await logIn(params);
 
-    if (!success) {
+    if (message !== undefined) {
       alert(message);
       return;
     }
 
-    setCookie("id", data.token, { expires: new Date(data.payload.exp * 1000) });
+    setCookie("id", data.token, { expires: new Date(data.payload.exp! * 1000) });
 
     router.push('/app');
   }
@@ -50,9 +50,9 @@ export const LogIn = (): JSX.Element => {
       <Form onSubmit={handleOnSubmit}>
         <Input label='Email' value={email} setValue={setEmail} placeholder='Enter your email here...' type='email' />
         <Input label='Password' value={password} setValue={setPassword} placeholder='Enter your password here...' type='password' />
-        <Button label='Log In' />
-        <AlternativeLink text={'Don\'t have an account yet ?'} href='/auth/sign-up' label='Create one now' />
+        <Submit label='Log In' />
       </Form>
+      <AlternativeLink text={'Don\'t have an account yet ?'} href='/auth/sign-up' label='Create one now' />
     </Window>
   )
 }
