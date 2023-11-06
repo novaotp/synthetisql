@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 import { IndexedTableModel } from '@models/table';
 
 /// -- Libs -- ///
-import TablesContext from '@/libs/contexts/TablesContext';
+import TablesContext from '@libs/contexts/TablesContext';
 
 interface TableProps {
   /** The table's properties. */

@@ -1,8 +1,8 @@
 
 "use server";
 
-import { db } from "@/database";
-import { verify } from "@/utils/jwt";
+import { db } from "@src/database";
+import { verify } from "@utils/jwt";
 import { Account } from "./interfaces";
 
 export const fetchAccountData = async (token: string) => {

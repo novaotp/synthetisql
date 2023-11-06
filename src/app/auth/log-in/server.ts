@@ -5,9 +5,9 @@
 import { compare } from 'bcrypt';
 
 // Internal
-import { db } from "@/database";
+import { db } from "@src/database";
 import { Response } from '../_interfaces/response';
-import { sign, verify } from '@/utils/jwt';
+import { sign, verify } from '@utils/jwt';
 
 export interface LogInParams {
   email: string,

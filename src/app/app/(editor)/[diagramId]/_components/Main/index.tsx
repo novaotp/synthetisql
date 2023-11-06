@@ -8,7 +8,7 @@ import { useEffect, useRef, useContext, useState } from 'react';
 
 /// -- Styling -- ///
 import styles from './index.module.scss';
-import styleVars from '../../assets/styles/variables.module.scss';
+import styleVars from '@assets/styles/variables.module.scss';
 
 /// -- Components -- ///
 import Table from '../Table';
@@ -16,10 +16,10 @@ import ContextMenu from './components/ContextMenu';
 import TableProperties from './components/TableProperties';
 
 /// -- Libs -- ///
-import TablesContext from '@contexts/TablesContext';
+import TablesContext from '@libs/contexts/TablesContext';
 
 /** The area for moving the tables around. */
-const Main = ({ mainRef }: any): JSX.Element => {
+export const Main = ({ mainRef }: any): JSX.Element => {
   const { setSelectedTable, tables } = useContext(TablesContext);
   const [isContextMenuOnTable, setIsContextMenuOnTable] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -82,5 +82,3 @@ const Main = ({ mainRef }: any): JSX.Element => {
     </div>
   )
 }
-
-export default Main;

@@ -7,7 +7,7 @@ import { type RefObject, useContext } from 'react';
 // Internal
 import styles from './index.module.scss';
 import Item from './components/Item';
-import TablesContext from '@contexts/TablesContext';
+import TablesContext from '@libs/contexts/TablesContext';
 
 interface ContextMenuProps {
   /** The ref of the menu. */

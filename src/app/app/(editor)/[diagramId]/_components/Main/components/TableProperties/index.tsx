@@ -10,7 +10,7 @@ import TabLabel from './types';
 import Body, { Action, Tab } from './components';
 
 /// -- Libs -- ///
-import TablesContext from '@contexts/TablesContext';
+import TablesContext from '@libs/contexts/TablesContext';
 
 interface TablePropertiesProps {
   /** The table's ref. */

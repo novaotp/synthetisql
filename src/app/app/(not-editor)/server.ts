@@ -1,9 +1,12 @@
 
 "use server";
 
-import { db } from '@/database';
-import { verify } from '@/utils/jwt';
+// Next
 import { cookies } from 'next/headers';
+
+// Internal
+import { db } from '@src/database';
+import { verify } from '@utils/jwt';
 import { Diagram } from '../interfaces';
 
 /** Creates a new diagram and returns its `id`, or `0` if it failed. */

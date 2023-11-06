@@ -2,7 +2,7 @@
 "use server";
 
 import { hash } from 'bcrypt';
-import { db } from "@/database";
+import { db } from "@src/database";
 
 export interface SignUpParams {
   firstName: string,

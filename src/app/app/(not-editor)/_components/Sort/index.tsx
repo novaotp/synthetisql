@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 // Internal
 import { Labeled } from "..";
-import { useCustomSearchParams } from "@hooks/useCustomSearchParams";
+import { useCustomSearchParams } from "@libs/hooks/useCustomSearchParams";
 
 export const Sort = (): JSX.Element => {
   const router = useRouter();
@@ -24,7 +24,7 @@ export const Sort = (): JSX.Element => {
   }
 
   return (
-    <Labeled label='Sort' htmlFor='sort'>
+    <Labeled label='Sort By' htmlFor='sort'>
       <select defaultValue={searchParams.get('sort') ?? ''} onChange={handleOnSortChange}>
         <option value="">Newest to oldest</option>
         <option value="oldest-to-newest">Oldest to newest</option>

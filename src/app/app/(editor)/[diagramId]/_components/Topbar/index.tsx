@@ -19,7 +19,7 @@ import LogoSynthetiSQL from '/public/logo_transparent_text_right.png';
 import { IndexedTableModel } from '@models/table';
 
 /// -- Libs -- ///
-import TablesContext from '@contexts/TablesContext';
+import TablesContext from '@libs/contexts/TablesContext';
 
 /// -- Utils -- ///
 import {

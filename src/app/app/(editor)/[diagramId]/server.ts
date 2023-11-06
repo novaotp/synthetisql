@@ -5,8 +5,8 @@
 import { redirect } from "next/navigation";
 
 // Internal
-import { db } from "@/database";
-import { verify } from "@/utils/jwt";
+import { db } from "@src/database";
+import { verify } from "@utils/jwt";
 import { Diagram } from "../../interfaces";
 
 export const fetchDiagram = async (id: number, jwt: string): Promise<Diagram | null> => {

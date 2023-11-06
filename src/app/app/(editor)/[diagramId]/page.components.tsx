@@ -4,6 +4,7 @@
 // React + Next + UUID
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from "next/navigation";
+import { getCookie } from 'cookies-next';
 import { v4 as uuidv4 } from 'uuid';
 
 // Internal
@@ -13,15 +14,13 @@ import styles from './page.module.scss';
 import { fetchDiagram } from './server';
 
 /// -- Components -- ///
-import Main from '@components/Main';
-import Topbar from "@components/Topbar";
+import { Main, Topbar } from './_components';
 
 /// -- Models -- ///
 import Table, { IndexedTableModel, TableModel } from '@models/table';
 
 /// -- Libs -- ///
-import TablesContext from '@/libs/contexts/TablesContext';
-import { getCookie } from 'cookies-next';
+import TablesContext from '@libs/contexts/TablesContext';
 
 export const Editor = () => {
   const diagramId = Number(useParams()['diagramId'] as string);
