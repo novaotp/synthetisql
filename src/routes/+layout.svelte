@@ -1,6 +1,7 @@
-<script lang="ts">
-	export const prerender = true;
-	export const ssr = false;
+<script>
+	import '../app.css';
 </script>
 
-<slot />
+<div class="relative w-full h-full flex justify-center items-center">
+	<slot />
+</div>
