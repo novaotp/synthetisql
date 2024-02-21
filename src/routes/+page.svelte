@@ -14,19 +14,18 @@
 
 	let filter: string = '';
 	let sort: string = '';
-	
+
 	$: entries = data.files
-						.filter(a => filter === "" || a.filename.toLowerCase().includes(filter.toLowerCase()))
-						.sort((a, b) => {
-							if (sort === "oldest-to-newest") {
-								return a.modifiedAt.getTime() - b.modifiedAt.getTime()
-							} else {
-								return b.modifiedAt.getTime() - a.modifiedAt.getTime()
-							}
-						});
+		.filter((a) => filter === '' || a.filename.toLowerCase().includes(filter.toLowerCase()))
+		.sort((a, b) => {
+			if (sort === 'oldest-to-newest') {
+				return a.modifiedAt.getTime() - b.modifiedAt.getTime();
+			} else {
+				return b.modifiedAt.getTime() - a.modifiedAt.getTime();
+			}
+		});
 
 	const handleNewDiagram = async (): Promise<void> => {
-		console.log("Action");
 		const filename = await uniqueFilename('diagram');
 		await createFile(filename, '');
 
@@ -35,9 +34,7 @@
 </script>
 
 <div class="relative w-full max-w-[1000px] flex-grow flex flex-col p-8 gap-y-20">
-	<header
-		class="relative h-20 py-3 flex justify-between items-center bg-white z-40"
-	>
+	<header class="relative h-20 py-3 flex justify-between items-center bg-white z-40">
 		<h1 class="text-3xl font-bold">My Diagrams</h1>
 		<button
 			class="relative h-full aspect-square rounded-md bg-[#907dff] flex justify-center items-center"

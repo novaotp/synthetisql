@@ -4,9 +4,9 @@ Welcome to the SynthetiSQL project, your new companion in database modeling! Thi
 
 ## Features
 
-* Free & Open Source: Join a community of developers in making database modeling more accessible, proficient and easier to use.
-* Universal SQL Script Generation: Regardless of your relational database, SynthetiSQL got you covered.
-* Seamless Transition: Effortlessly move from logical models to database creation with generated scripts that are ready to run.
+- Free & Open Source: Join a community of developers in making database modeling more accessible, proficient and easier to use.
+- Universal SQL Script Generation: Regardless of your relational database, SynthetiSQL got you covered.
+- Seamless Transition: Effortlessly move from logical models to database creation with generated scripts that are ready to run.
 
 ## Getting Started
 

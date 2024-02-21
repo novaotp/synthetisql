@@ -1,4 +1,4 @@
 export interface FileData {
-    filename: string;
-    modifiedAt: Date;
+	filename: string;
+	modifiedAt: Date;
 }

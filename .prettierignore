@@ -2,3 +2,7 @@
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+/src-tauri/target
+/.svelte-kit
+/node_modules
+/build
