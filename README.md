@@ -12,7 +12,7 @@ Welcome to the SynthetiSQL project, your new companion in database modeling! Thi
 
 ### Prerequisites
 
-For Tauri, follow the [official prerquisites](https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-windows) for development
+For Tauri, follow the [official prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-windows) for development
 
 ### Develop locally
 
