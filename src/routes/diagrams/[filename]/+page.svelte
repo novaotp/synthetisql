@@ -4,4 +4,4 @@
 	export let data: PageData;
 </script>
 
-<p>You chose this filename : {data.filename}</p>
+<p>You chose this filename : {data.diagram}</p>

@@ -1,8 +1,10 @@
 import { BaseDirectory, readTextFile } from '@tauri-apps/api/fs';
 import type { PageLoad } from './$types';
+import type { IndexedTableModel } from '$models/Table';
+import { MODEL_PATH } from '$config/config';
 
 export const load: PageLoad = async ({ params }) => {
-	const contents = await readTextFile(params.filename, { dir: BaseDirectory.Desktop });
+	const contents = JSON.parse(await readTextFile(`${MODEL_PATH}/${params.filename}`, { dir: BaseDirectory.Document }));
 
 	const isValidModelFormat = (model: any[]): boolean => {
 		for (const indexedTable of model) {
@@ -45,13 +47,13 @@ export const load: PageLoad = async ({ params }) => {
 		return true;
 	}
 
-	if (!isValidModelFormat(JSON.parse(contents))) {
+	if (!isValidModelFormat(contents)) {
 		return {
 			message: "Invalid file"
 		}
 	}
 
 	return {
-		filename: contents
+		diagram: contents as IndexedTableModel[]
 	};
 };

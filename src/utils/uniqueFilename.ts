@@ -1,3 +1,4 @@
+import { MODEL_PATH } from '$config/config';
 import { BaseDirectory, exists } from '@tauri-apps/api/fs';
 
 /**
@@ -10,10 +11,10 @@ export const uniqueFilename = async (prefix: string): Promise<string> => {
 	let id = 1;
 	while (true) {
 		const filename = `${prefix}_${id}.synmodel`;
-		const fullPath = `data/${filename}`;
+		const fullPath = `${MODEL_PATH}/${filename}`;
 
 		try {
-			const fileExists = await exists(fullPath, { dir: BaseDirectory.Desktop });
+			const fileExists = await exists(fullPath, { dir: BaseDirectory.Document });
 
 			if (!fileExists) {
 				return filename;

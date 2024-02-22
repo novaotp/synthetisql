@@ -27,14 +27,14 @@
 
 	const handleNewDiagram = async (): Promise<void> => {
 		const filename = await uniqueFilename('diagram');
-		await createFile(filename, '');
+		await createFile(filename, '[]');
 
 		await goto(`/diagrams/${filename}`);
 	};
 </script>
 
-<div class="relative w-full max-w-[1000px] flex-grow flex flex-col p-8 gap-y-20">
-	<header class="relative h-20 py-3 flex justify-between items-center bg-white z-40">
+<div class="relative w-full max-w-[1000px] flex-grow flex flex-col gap-y-20">
+	<header class="relative h-20 pb-3 flex justify-between items-center bg-white z-40">
 		<h1 class="text-3xl font-bold">My Diagrams</h1>
 		<button
 			class="relative h-full aspect-square rounded-md bg-[#907dff] flex justify-center items-center"
