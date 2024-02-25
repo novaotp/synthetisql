@@ -54,6 +54,8 @@ export const load: PageLoad = async ({ params }) => {
 	}
 
 	return {
-		diagram: contents as IndexedTableModel[]
+		diagram: contents as IndexedTableModel[],
+		filename: params.filename.split(".").at(0)!,
+		extension: params.filename.split(".").at(1)!,
 	};
 };

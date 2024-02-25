@@ -3,6 +3,7 @@ import type { PageLoad } from './$types';
 import { metadata } from 'tauri-plugin-fs-extra-api';
 import type { FileData } from '../models/FileData';
 import { MODEL_PATH } from '$config/config';
+import { config } from '../utils/config';
 
 export const load: PageLoad = async () => {
 	const files: FileData[] = [];
@@ -19,6 +20,7 @@ export const load: PageLoad = async () => {
 	}
 
 	return {
-		files: files
+		files: files,
+		config: await config()
 	};
 };

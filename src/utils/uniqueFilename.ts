@@ -10,7 +10,7 @@ import { BaseDirectory, exists } from '@tauri-apps/api/fs';
 export const uniqueFilename = async (prefix: string): Promise<string> => {
 	let id = 1;
 	while (true) {
-		const filename = `${prefix}_${id}.synmodel`;
+		const filename = `${prefix}${id}.synmodel`;
 		const fullPath = `${MODEL_PATH}/${filename}`;
 
 		try {

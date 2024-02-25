@@ -24,6 +24,9 @@
 				"renameFile": true,
 				"exists": true,
 				"scope": ["$DOCUMENT/**"]
+			},
+			"dialog": {
+				"all": true
 			}
 		},
 		"bundle": {

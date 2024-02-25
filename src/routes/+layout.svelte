@@ -7,10 +7,14 @@
 <div class="relative w-full h-full flex justify-between items-center">
 	{#if !($page.url.pathname.startsWith("/diagrams/") && !$page.url.pathname.endsWith("/diagrams/"))}
 		<Navigation />
-	{/if}
-	<div class="relative h-full flex-grow flex justify-center">
-		<main class="relative h-full w-full max-w-[1000px] py-20">
+		<div class="relative h-full flex-grow flex justify-center">
+			<main class="relative h-full w-full max-w-[1000px] py-20">
+				<slot />
+			</main>
+		</div>
+	{:else}
+		<div class="relative h-full w-full">
 			<slot />
-		</main>
-	</div>
+		</div>
+	{/if}
 </div>

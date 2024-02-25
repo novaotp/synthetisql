@@ -1,8 +1,9 @@
 import type { Config } from "$models/Config";
 
 export const DEFAULT_CONFIG_DATA: Config = {
-    autoSave: false,
-    defaultFilenamePrefix: "diagram_"
+    autoSave: "false",
+    defaultFilenamePrefix: "diagram_",
+    language: "English"
 } as const;
 
 export const BASE_PATH = "synthetisql" as const;
