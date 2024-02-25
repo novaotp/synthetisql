@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { IconPlus } from "@tabler/icons-svelte";
 	import Item from "./Item.ContextMenu.svelte";
-	import { message } from "@tauri-apps/api/dialog";
+	import { addTable } from "$stores/tables";
 
 	/** The cursor's position when right click occurs. */
 	let cursorPosition = { x: 0, y: 0 };
@@ -39,10 +39,6 @@
 			h: height,
 			w: width
 		};
-	}
-
-	const addTable = async () => {
-		await message("Not implemented yet...", { title: "SynthetiSQL" })
 	}
 </script>
 

@@ -1,6 +1,6 @@
 {
 	"name": "synthetisql",
-	"version": "0.3.2",
+	"version": "0.4.0",
 	"private": false,
 	"author": "Sajidur Rahman",
 	"scripts": {
@@ -20,6 +20,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tauri-apps/cli": "^1.5.10",
 		"@types/eslint": "8.56.0",
+		"@types/uuid": "^9.0.8",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"autoprefixer": "^10.4.17",
@@ -41,6 +42,7 @@
 		"@tabler/icons-svelte": "^2.47.0",
 		"@tauri-apps/api": "^1.5.3",
 		"tauri-plugin-fs-extra-api": "github:tauri-apps/tauri-plugin-fs-extra#v1",
-		"tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log"
+		"tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log",
+		"uuid": "^9.0.1"
 	}
 }

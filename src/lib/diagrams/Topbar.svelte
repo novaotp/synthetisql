@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { MODEL_PATH } from '$config/config';
+	import { tables } from '$stores/tables';
+	import { addToast } from '$stores/toast';
 	import { IconChevronLeft } from '@tabler/icons-svelte';
-	import { BaseDirectory, renameFile } from '@tauri-apps/api/fs';
+	import { BaseDirectory, renameFile, writeTextFile } from '@tauri-apps/api/fs';
 
 	export let filename: string;
 	export let extension: string;
@@ -14,6 +16,10 @@
 			`${MODEL_PATH}/${newFilename}.${extension}`,
 			{ dir: BaseDirectory.Document }
 		);
+
+		await writeTextFile(`${MODEL_PATH}/${newFilename}.${extension}`, JSON.stringify($tables), { dir: BaseDirectory.Document })
+
+		addToast({ type: "success", message: "File saved successfully" })
 	};
 </script>
 

@@ -25,7 +25,7 @@
 		});
 </script>
 
-<div class="relative w-full max-w-[1000px] flex-grow flex flex-col gap-y-20">
+<div class="relative w-full max-w-[1000px] h-full flex flex-col gap-y-20">
 	<Header prefix={data.config.defaultFilenamePrefix} />
 	<Options bind:filter bind:sort />
 	<Diagrams {entries} />

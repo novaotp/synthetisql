@@ -1,5 +1,10 @@
 import type { IndexedRowModel } from "./Row";
 
+export interface TablePosition {
+    x: number,
+    y: number,
+}
+
 export interface TableModel {
     name: string,
     rows: IndexedRowModel[],
@@ -12,8 +17,5 @@ export interface IndexedTableModel {
     /** The table itself. */
     table: TableModel,
     /** The position of the table. */
-    position: {
-        x: number,
-        y: number,
-    },
+    position: TablePosition,
 }
