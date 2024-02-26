@@ -7,7 +7,7 @@
 
 <div class="relative w-full h-full flex justify-between items-center">
 	<ToastContainer />
-	{#if !($page.url.pathname.startsWith("/diagrams/") && !$page.url.pathname.endsWith("/diagrams/"))}
+	{#if !($page.url.pathname.startsWith("/diagrams"))}
 		<Navigation />
 		<div class="relative h-full flex-grow flex justify-center">
 			<main class="relative h-full w-full max-w-[1000px] py-20">

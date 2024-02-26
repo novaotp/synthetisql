@@ -9,9 +9,11 @@
 
 	export let initial: IndexedTableModel[];
 	export let filename: string;
-	export let extension: string;
 
-	let newFilename: string = filename;
+	$: name = filename.split(".").at(0)!;
+	$: extension = filename.split(".").at(1)!;
+
+	$: newFilename = name;
 
 	const back = async () => {
 		await goto("/")
@@ -19,7 +21,7 @@
 
 	const save = async () => {
 		await renameFile(
-			`${MODEL_PATH}/${filename}.${extension}`,
+			`${MODEL_PATH}/${name}.${extension}`,
 			`${MODEL_PATH}/${newFilename}.${extension}`,
 			{ dir: BaseDirectory.Document }
 		);

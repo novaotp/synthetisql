@@ -2,16 +2,21 @@
 	import type { FileData } from '$models/FileData';
 
 	export let entries: FileData[];
+
+	const setLocalStorage = (filename: string) => {
+		localStorage.setItem("filename", filename);
+	}
 </script>
 
 <div class="relative w-full flex-grow overflow-y-scroll px-10 grid grid-cols-3 gap-10 p-3">
 	{#each entries as entry}
 		<a
-			href="/diagrams/{entry.filename}"
+			on:click={() => setLocalStorage(entry.filename)}
+			href="/diagrams"
 			class="rounded-xl border border-gray-400 duration-150 cursor-pointer ease-in-out hover:scale-105"
 		>
 			<iframe
-				src="/diagrams/{entry.filename}"
+				src="/diagrams"
 				title="Iframe title"
 				class="relative w-full aspect-square border-b border-gray-400 pointer-events-none"
 			></iframe>

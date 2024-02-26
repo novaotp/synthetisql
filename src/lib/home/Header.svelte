@@ -10,7 +10,9 @@
 		const filename = await uniqueFilename(prefix);
 		await createFile(filename, '[]');
 
-		await goto(`/diagrams/${filename}`);
+		localStorage.setItem("filename", filename);
+
+		await goto("/diagrams");
 	};
 </script>
 
