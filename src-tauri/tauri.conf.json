@@ -44,7 +44,7 @@
 				"icons/icon.icns",
 				"icons/icon.ico"
 			],
-			"identifier": "com.tauri.dev",
+			"identifier": "com.synthetisql.app",
 			"longDescription": "",
 			"macOS": {
 				"entitlements": null,
@@ -74,7 +74,10 @@
 				"height": 600,
 				"resizable": true,
 				"title": "SynthetiSQL",
-				"width": 800
+				"width": 800,
+				"center": true,
+				"minHeight": 600,
+				"maxHeight": 800
 			}
 		]
 	}

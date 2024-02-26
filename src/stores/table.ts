@@ -1,8 +1,21 @@
 import type { IndexedTableModel, TableModel, TablePosition } from "$models/Table";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import { v4 as uuidv4 } from "uuid";
 
 export const tables = writable<IndexedTableModel[]>([]);
+export const selectedTableId = writable<string | undefined>(undefined);
+
+/** Resets every table store. */
+export const init = (initialTables: IndexedTableModel[] = [], initialSelectedId: string | undefined = undefined) => {
+    clearTables();
+    setInitialTables(initialTables);
+    setSelectedTableId(initialSelectedId);
+}
+
+/** Sets the currently selected table id. */
+export const setSelectedTableId = (id: string | undefined) => {
+    selectedTableId.set(id);
+}
 
 /** Removes all the tables from the store. */
 export const clearTables = () => {
@@ -10,8 +23,13 @@ export const clearTables = () => {
 }
 
 /** Sets the store as the initial tables. */
-export const initialTables = (initial: IndexedTableModel[]) => {
+export const setInitialTables = (initial: IndexedTableModel[]) => {
     tables.set(initial);
+}
+
+/** Gets a table via the given id. */
+export const getTable = (id: string): IndexedTableModel | undefined => {
+    return get(tables).find(table => table.id === id);
 }
 
 /** Adds a new table to the store. */

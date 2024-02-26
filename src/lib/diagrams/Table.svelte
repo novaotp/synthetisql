@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IndexedTableModel } from '$models/Table';
-	import { updateTable } from '$stores/tables';
+	import { selectedTableId, setSelectedTableId, updateTable } from '$stores/table';
 
 	export let table: IndexedTableModel;
 
@@ -10,6 +10,7 @@
 
 	function onMouseDown() {
 		moving = true;
+		setSelectedTableId(table.id);
 	}
 
 	function onMouseMove(event: MouseEvent) {
@@ -27,30 +28,26 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
+	data-table={true}
 	on:mousedown={onMouseDown}
 	style="left: {x}px; top: {y}px;"
-	class="absolute select-none cursor-move"
+	class={`absolute ${moving ? 'cursor-move' : 'cursor-pointer'} min-w-[200px] rounded-2xl bg-white ${$selectedTableId === table.id ? 'border-[3px] border-blue-500' : 'border border-grey-700'}`}
 >
-	<div
-		class="absolute min-w-[200px] rounded-2xl cursor-pointer bg-white border border-grey-500"
-		data-table
+	<h2
+		class="relative w-full px-5 h-10 flex justify-start items-center bg-rose-400 rounded-t-xl pointer-events-none"
 	>
+		{table.table.name}
+	</h2>
+	{#each table.table.rows as { row }}
 		<div
-			class="relative w-full px-5 h-10 flex justify-start items-center bg-rose-400 rounded-t-2xl pointer-events-none"
+			class="relative w-full px-5 h-10 flex justify-start items-center pointer-events-none border-b border-rose-400"
 		>
-			{table.table.name}
+			{row.name} : {row.type}{row.precision ? `(${row.precision})` : ''}
 		</div>
-		{#each table.table.rows as { row }}
-			<div
-				class="relative w-full px-5 h-10 flex justify-start items-center pointer-events-none border-b border-rose-400"
-			>
-				{row.name} : {row.type}{row.precision ? `(${row.precision})` : ''}
-			</div>
-		{/each}
-		<div
-			class="relative w-full h-5 flex justify-center items-center rounded-b-2xl pointer-events-none"
-		></div>
-	</div>
+	{/each}
+	<div
+		class="relative w-full h-5 flex justify-center items-center rounded-b-xl pointer-events-none"
+	></div>
 </div>
 
 <svelte:window on:mouseup={onMouseUp} on:mousemove={onMouseMove} />

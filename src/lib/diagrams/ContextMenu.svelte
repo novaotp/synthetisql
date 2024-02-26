@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { IconPlus } from "@tabler/icons-svelte";
 	import Item from "./Item.ContextMenu.svelte";
-	import { addTable } from "$stores/tables";
+	import { addTable } from "$stores/table";
 
 	/** The cursor's position when right click occurs. */
 	let cursorPosition = { x: 0, y: 0 };
