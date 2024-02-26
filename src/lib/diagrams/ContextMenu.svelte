@@ -20,7 +20,7 @@
 		};
 		cursorPosition = {
 			x: e.clientX,
-			y: e.clientY
+			y: e.clientY - 80
 		};
 		
 		if (browser.h - cursorPosition.y < menu.h) cursorPosition.y = cursorPosition.y - menu.h;
@@ -40,13 +40,17 @@
 			w: width
 		};
 	}
+
+	const addNewTable = () => {
+		addTable({ x: cursorPosition.x, y: cursorPosition.y })
+	}
 </script>
 
 {#if showMenu}
 	<nav use:getContextMenuDimension style="position: absolute; top:{cursorPosition.y}px; left:{cursorPosition.x}px">
 		<div id="navbar" class="inline-flex flex-col border border-[#999] w-[170px] bg-white rounded-xl overflow-hidden">
 			<ul class="m-2 list-none">
-				<Item label="Add Item" onClick={addTable} icon={IconPlus} />
+				<Item label="Add Item" onClick={addNewTable} icon={IconPlus} />
 			</ul>
 		</div>
 	</nav>

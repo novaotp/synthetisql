@@ -15,10 +15,10 @@ export const initialTables = (initial: IndexedTableModel[]) => {
 }
 
 /** Adds a new table to the store. */
-export const addTable = () => {
+export const addTable = (position: TablePosition = { x: 0, y: 0 }) => {
     const id = uuidv4();
 
-    tables.update((all) => [{ id, table: { name: "Default Table", rows: [] }, position: { x: 0, y: 0 } }, ...all]);
+    tables.update((all) => [{ id, table: { name: "Default Table", rows: [] }, position }, ...all]);
 };
 
 /** Updates an existing table from the store. */
