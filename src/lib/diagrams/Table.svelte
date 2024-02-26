@@ -40,7 +40,7 @@
 		>
 			{table.table.name}
 		</div>
-		{#each table.table.rows as { id, row }}
+		{#each table.table.rows as { row }}
 			<div
 				class="relative w-full px-5 h-10 flex justify-start items-center pointer-events-none border-b border-rose-400"
 			>
