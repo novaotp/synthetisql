@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { FileData } from '$models/FileData';
-	import { setFilename } from '$stores/filename';
 
 	export let entries: FileData[];
 </script>
@@ -8,7 +7,7 @@
 <div class="relative w-full flex-grow overflow-y-scroll px-10 grid grid-cols-3 gap-10 p-3">
 	{#each entries as entry}
 		<a
-			on:click={() => setFilename(entry.filename)}
+			on:click={() => localStorage.setItem("filename", entry.filename)}
 			href="/diagrams"
 			class="rounded-xl border border-gray-400 duration-150 cursor-pointer ease-in-out hover:scale-105"
 		>
