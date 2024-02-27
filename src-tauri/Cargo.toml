@@ -1,10 +1,10 @@
 [package]
-name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+name = "synthetisql"
+version = "0.5.1"
+description = "The rust backend for SynthetiSQL"
+authors = ["Sajidur Rahman"]
+license = "GPL-3.0"
+repository = "https://github.com/novaotp/synthetisql"
 default-run = "app"
 edition = "2021"
 rust-version = "1.60"

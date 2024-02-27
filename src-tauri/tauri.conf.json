@@ -26,7 +26,8 @@
 				"scope": ["$DOCUMENT/**"]
 			},
 			"dialog": {
-				"all": true
+				"confirm": true,
+				"message": true
 			}
 		},
 		"bundle": {
