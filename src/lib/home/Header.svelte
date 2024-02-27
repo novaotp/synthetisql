@@ -3,6 +3,7 @@
 	import { IconPlus } from "@tabler/icons-svelte";
 	import { createFile } from "../../utils/createFile";
 	import { uniqueFilename } from "../../utils/uniqueFilename";
+	import { setFilename } from "$stores/filename";
 
     export let prefix: string;
 
@@ -10,9 +11,9 @@
 		const filename = await uniqueFilename(prefix);
 		await createFile(filename, '[]');
 
-		localStorage.setItem("filename", filename);
+		setFilename(filename);
 
-		await goto("/diagrams");
+		await goto(`/diagrams?filename=${filename}`);
 	};
 </script>
 

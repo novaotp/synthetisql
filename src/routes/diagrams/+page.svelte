@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import type { IndexedTableModel } from '$models/Table';
 	import { BaseDirectory, readTextFile } from '@tauri-apps/api/fs';
+	import { filename as storedFilename } from '$stores/filename';
 	import { MODEL_PATH } from '$config/config';
 
 	let diagram: IndexedTableModel[] | undefined = undefined;
@@ -14,18 +15,16 @@
 
 	onMount(async () => {
 		clearTables();
-		
-		const storedFilename = localStorage.getItem("filename");
 
-		if (!storedFilename) {
+		if (!$storedFilename) {
 			errorMessage = "Unable to find the selected file";
 			return;
 		}
 
-		const contents = JSON.parse(await readTextFile(`${MODEL_PATH}/${storedFilename}`, { dir: BaseDirectory.Document }));
+		const contents = JSON.parse(await readTextFile(`${MODEL_PATH}/${$storedFilename}`, { dir: BaseDirectory.Document }));
 	
 		diagram = contents;
-		filename = storedFilename;
+		filename = $storedFilename;
 		
 		init(diagram ?? []);
 	})

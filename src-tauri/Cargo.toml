@@ -1,6 +1,6 @@
 [package]
 name = "synthetisql"
-version = "0.5.2"
+version = "0.5.3"
 description = "The rust backend for SynthetiSQL"
 authors = ["Sajidur Rahman"]
 license = "GPL-3.0"
