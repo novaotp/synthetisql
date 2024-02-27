@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ContextMenu from '$lib/diagrams/ContextMenu.svelte';
 	import Topbar from '$lib/diagrams/Topbar.svelte';
-	import { clearTables, init, tables } from '$stores/table';
+	import { clearTables, init, setSelectedTableId, tables } from '$stores/table';
 	import Table from '$lib/diagrams/Table.svelte';
 	import { onMount } from 'svelte';
 	import type { IndexedTableModel } from '$models/Table';
@@ -11,6 +11,7 @@
 
 	let diagram: IndexedTableModel[] | undefined = undefined;
 	let filename: string | undefined = undefined;
+	let isLoading: boolean = true;
 	let errorMessage: string | undefined = undefined;
 
 	onMount(async () => {
@@ -21,26 +22,44 @@
 			return;
 		}
 
-		const contents = JSON.parse(await readTextFile(`${MODEL_PATH}/${$storedFilename}`, { dir: BaseDirectory.Document }));
-	
-		diagram = contents;
-		filename = $storedFilename;
+		try {
+			const contents = JSON.parse(await readTextFile(`${MODEL_PATH}/${$storedFilename}`, { dir: BaseDirectory.Document }));
 		
-		init(diagram ?? []);
-	})
+			diagram = contents;
+			filename = $storedFilename;
+			
+			init(diagram ?? []);
+		} catch (error) {
+			console.error(error);
+			errorMessage = (error as Error).message;
+		} finally {
+			isLoading = false;
+		}
+
+	});
+
+	const onMouseDown = (event: MouseEvent) => {
+		if (!(event.target as HTMLElement).dataset.table) {
+			setSelectedTableId(undefined);
+		}
+	}
 </script>
 
 {#if errorMessage}
 	<p>{errorMessage}</p>
+{:else if isLoading}
+	<p>Loading diagram...</p>
 {:else}
 	<Topbar
 		initial={diagram ?? []}
 		filename={filename ?? ''}
 	/>
-	<div class="relative w-full h-[calc(100%-5rem)]">
+	<main class="relative w-full h-[calc(100%-5rem)]">
 		<ContextMenu />
 		{#each $tables as table}
 			<Table {table} />
 		{/each}
-	</div>
+	</main>
 {/if}
+
+<svelte:window on:click|preventDefault={onMouseDown} />
