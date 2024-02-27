@@ -1,6 +1,6 @@
 <script>
 	import '../app.css';
-	import Navigation from "$lib/Navigation/Navigation.svelte";
+	import Navigation from "$lib/shared/Navigation/Navigation.svelte";
 	import ToastContainer from "$lib/shared/Toast/Container.svelte";
 	import { page } from '$app/stores';
 </script>

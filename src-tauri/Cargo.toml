@@ -1,11 +1,11 @@
 [package]
 name = "synthetisql"
-version = "0.5.1"
+version = "0.5.2"
 description = "The rust backend for SynthetiSQL"
 authors = ["Sajidur Rahman"]
 license = "GPL-3.0"
 repository = "https://github.com/novaotp/synthetisql"
-default-run = "app"
+default-run = "synthetisql"
 edition = "2021"
 rust-version = "1.60"
 
@@ -17,7 +17,7 @@ tauri-build = { version = "1.5.1", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.6.0", features = [ "dialog-all", "fs-all"] }
+tauri = { version = "1.6.0", features = [ "dialog-confirm", "dialog-message", "fs-all"] }
 tauri-plugin-fs-extra = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 
 [features]
