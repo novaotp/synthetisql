@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { IconPlus } from "@tabler/icons-svelte";
+	import { IconEdit, IconPlus, IconTrash } from "@tabler/icons-svelte";
 	import Item from "./Item.ContextMenu.svelte";
-	import { addTable } from "$stores/table";
+	import { addTable, deleteTable, selectedTableId, setSelectedTableId } from "$stores/table";
+	import { message } from "@tauri-apps/api/dialog";
 
 	/** The cursor's position when right click occurs. */
 	let cursorPosition = { x: 0, y: 0 };
@@ -12,8 +13,18 @@
 	/** If the menu is visible or not. */
 	export let showMenu = false;
 
+	let tableMenu: boolean = false;
+
 	function rightClickContextMenu(e: MouseEvent) {
 		showMenu = true;
+
+		if ((e.target as HTMLElement).dataset.table) {
+			setSelectedTableId((e.target as HTMLElement).dataset.tableId);
+			tableMenu = true;
+		} else {
+			tableMenu = false;
+        }
+
 		browser = {
 			w: window.innerWidth,
 			h: window.innerHeight
@@ -44,16 +55,21 @@
 	const addNewTable = () => {
 		addTable({ x: cursorPosition.x, y: cursorPosition.y })
 	}
+
+	const deleteExistingTable = () => {
+		deleteTable($selectedTableId!)
+	}
 </script>
 
 {#if showMenu}
-	<nav use:getContextMenuDimension style="position: absolute; top:{cursorPosition.y}px; left:{cursorPosition.x}px">
-		<div id="navbar" class="inline-flex flex-col border border-[#999] w-[170px] bg-white rounded-xl overflow-hidden">
-			<ul class="m-2 list-none">
-				<Item label="Add Item" onClick={addNewTable} icon={IconPlus} />
-			</ul>
-		</div>
-	</nav>
+	<ul use:getContextMenuDimension style="top:{cursorPosition.y}px; left:{cursorPosition.x}px" class="z-50 p-2 gap-2 list-none absolute inline-flex flex-col border border-[#999] w-auto bg-white rounded-xl overflow-hidden">
+		{#if tableMenu}
+			<Item label="Edit properties" onClick={async () => await message("Not implemented yet")} icon={IconEdit} />
+			<Item label="Delete table" onClick={deleteExistingTable} icon={IconTrash} />
+		{:else}
+			<Item label="Add Table" onClick={addNewTable} icon={IconPlus} />
+		{/if}
+	</ul>
 {/if}
 
 <svelte:window on:contextmenu|preventDefault={rightClickContextMenu} on:click={onPageClick} />

@@ -4,7 +4,6 @@
 	import { BaseDirectory, writeTextFile } from '@tauri-apps/api/fs';
 	import type { PageData } from './$types';
 	import type { Config } from '$models/Config';
-	import { configDir } from '@tauri-apps/api/path';
 
 	export let data: PageData;
 

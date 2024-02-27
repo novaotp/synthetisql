@@ -2,12 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { MODEL_PATH } from '$config/config';
 	import type { IndexedTableModel } from '$models/Table';
-	import { tables } from '$stores/table';
+	import { setInitialTables, tables } from '$stores/table';
 	import { addToast } from '$stores/toast';
 	import { IconChevronLeft } from '@tabler/icons-svelte';
 	import { BaseDirectory, exists, renameFile, writeTextFile } from '@tauri-apps/api/fs';
 
-	export const initial: IndexedTableModel[] = [];
+	export let initial: IndexedTableModel[];
 	export let filename: string;
 
 	let alreadyUsed: boolean = false;
@@ -31,6 +31,10 @@
 			dir: BaseDirectory.Document
 		}));
 
+	const cancel = () => {
+		setInitialTables(initial);
+	}
+
 	const save = async () => {
 		if (await filenameAlreadyUsed()) {
 			addToast({ type: 'error', message: 'Filename already used by another diagram' });
@@ -47,6 +51,8 @@
 			`${MODEL_PATH}/${newFilename}.${extension}`,
 			{ dir: BaseDirectory.Document }
 		);
+
+		initial = $tables;
 
 		await writeTextFile(`${MODEL_PATH}/${newFilename}.${extension}`, JSON.stringify($tables), {
 			dir: BaseDirectory.Document
@@ -78,5 +84,8 @@
 		</div>
 		<span>.{extension}</span>
 	</div>
-	<button on:click={save}>Save</button>
+	<div class="relative flex justify-between items-center gap-5">
+		<button on:click={cancel} class="px-3 py-2 rounded-md hover:bg-gray-700">Cancel</button>
+		<button on:click={save} class="px-3 py-2 rounded-md hover:bg-gray-700">Save</button>
+	</div>
 </header>
