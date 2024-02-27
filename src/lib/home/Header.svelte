@@ -13,7 +13,7 @@
 
 		setFilename(filename);
 
-		await goto(`/diagrams?filename=${filename}`);
+		await goto(`/diagrams`);
 	};
 </script>
 
