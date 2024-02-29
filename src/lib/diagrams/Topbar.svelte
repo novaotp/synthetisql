@@ -53,6 +53,7 @@
 
 		if (error) {
 			addToast({ type: 'error', message: error });
+			return;
 		}
 
 		await renameFile(
