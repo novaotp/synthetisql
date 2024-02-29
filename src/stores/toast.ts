@@ -16,7 +16,7 @@ export const addToast = (toast: ToastData) => {
     const id = uuidv4();
 
     // Push the toast to the top of the list of toasts
-    toasts.update((all) => [{ id, ...toast }, ...all]);
+    toasts.update(all => [{ id, ...toast }, ...all]);
 
     setTimeout(() => {
         dismissToast(id)
@@ -25,5 +25,5 @@ export const addToast = (toast: ToastData) => {
 
 /** Removes a toast from the stack. */
 export const dismissToast = (id: string) => {
-    toasts.update((all) => all.filter((toast) => toast.id !== id));
+    toasts.update(all => all.filter((toast) => toast.id !== id));
 };

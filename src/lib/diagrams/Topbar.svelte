@@ -33,17 +33,26 @@
 
 	const cancel = () => {
 		setInitialTables(initial);
+		newFilename = name;
 	}
 
-	const save = async () => {
+	const findErrorOnSave = async (): Promise<string | null> => {
 		if (await filenameAlreadyUsed()) {
-			addToast({ type: 'error', message: 'Filename already used by another diagram' });
-			return;
+			return 'Filename already used by another diagram';
 		}
 
 		if (newFilename === "") {
-			addToast({ type: 'error', message: 'Filename cannot be empty' });
-            return;
+			return 'Filename cannot be empty';
+		}
+
+		return null;
+	}
+
+	const save = async () => {
+		const error = await findErrorOnSave();
+
+		if (error) {
+			addToast({ type: 'error', message: error });
 		}
 
 		await renameFile(

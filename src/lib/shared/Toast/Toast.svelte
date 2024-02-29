@@ -18,16 +18,16 @@
 </script>
 
 <article
-	class="w-80 mb-2 flex items-center rounded px-6 py-3 text-white {bgColor}"
+	class="w-auto max-w-[500px] mb-2 flex items-center rounded px-6 py-3 gap-5 text-white {bgColor} shadow-lg"
 	role="alert"
 	transition:fade
 >
 	<svelte:component this={icon} class="w-[1.1em]" />
-	<div class="ml-4">
+	<div>
 		<slot />
 	</div>
 	<button
-		class="ml-auto border-none bg-transparent text-white"
+		class="border-none bg-transparent text-white"
 		on:click={() => dispatch('dismiss')}
 	>
 		<CloseIcon class="w-[0.8em]" />
